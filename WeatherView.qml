@@ -93,7 +93,6 @@ Item {
         }
     }
 
-    // --- Current Weather Components ---
     Component {
         id: currentTemperatureComponent
         Rectangle {
@@ -188,7 +187,6 @@ Item {
         }
     }
 
-    // --- Destination Weather Components ---
     Component {
         id: destinationTemperatureComponent
         Rectangle {
@@ -283,7 +281,6 @@ Item {
         }
     }
 
-    // --- Current Weather Block ---
     RowLayout {
         id: rowWeather1
         width: 100
@@ -295,7 +292,7 @@ Item {
 
         Rectangle {
             width: 50
-            color: "#00ffffff"
+            color: "transparent"
             Layout.fillHeight: true
 
             Image {
@@ -307,7 +304,7 @@ Item {
 
         Rectangle {
             width: 75
-            color: "#00ffffff"
+            color: "transparent"
             Layout.fillHeight: true
 
             ColumnLayout {
@@ -336,6 +333,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true
+                    color: "transparent"
 
                     ListView {
                         id: listView
@@ -366,7 +364,6 @@ Item {
         }
     }
 
-    // --- Destination Weather Block ---
     RowLayout {
         id: rowWeather2
         width: 100
@@ -379,7 +376,7 @@ Item {
 
         Rectangle {
             width: 50
-            color: "#00ffffff"
+            color: "transparent"
             Layout.fillHeight: true
 
             Image {
@@ -391,7 +388,7 @@ Item {
 
         Rectangle {
             width: 75
-            color: "#00ffffff"
+            color: "transparent"
             Layout.fillHeight: true
 
             ColumnLayout {
@@ -420,6 +417,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true
+                    color: "transparent"
 
                     ListView {
                         id: destinationListView
