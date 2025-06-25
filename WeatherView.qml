@@ -2,25 +2,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Window {
+Item {
     id: root
-    title: qsTr("ARHUD WeatherApp UI")
     objectName: "weatherViewWindow"
 
     visible: true
-
-    width: 756
-    height: 336
-
-    x: 25
-    y: 200
-
-    color: "#ffffc5"
-
-    FontLoader {
-        id: encodeSansThin
-        source: "assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf"
-    }
 
     property int displayDuration: 2000
     property int scrollDuration: 1000
@@ -57,7 +43,6 @@ Window {
                 scrollTimer.stop()
             }
         }
-
     }
 
     Timer {
@@ -91,7 +76,6 @@ Window {
                 destinationScrollTimer.stop()
             }
         }
-
     }
 
     Timer {
@@ -106,35 +90,39 @@ Window {
 
             destinationScrollTimer.stop()
             scrollTimer.start()
-
         }
     }
 
+    // --- Current Weather Components ---
     Component {
         id: currentTemperatureComponent
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
 
             RowLayout {
                 anchors.fill: parent
                 spacing: 1
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.currentTemperature : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     width: 80
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
                 }
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.currentTemperatureUnit : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                 }
@@ -147,12 +135,14 @@ Window {
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
 
-            TextInput {
+            Text {
                 text: weatherViewModel ? weatherViewModel.currentCondition : ""
                 font.pixelSize: 24
                 font.family: encodeSansThin.name
+                font.weight: Font.Thin
+                color: "#000000"
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignTop
@@ -165,26 +155,30 @@ Window {
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
 
             RowLayout {
                 anchors.fill: parent
                 spacing: 1
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.currentWindSpeed : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     width: 80
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
                 }
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.currentWindSpeedUnit : ""
                     font.pixelSize: 18
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
@@ -194,30 +188,36 @@ Window {
         }
     }
 
+    // --- Destination Weather Components ---
     Component {
         id: destinationTemperatureComponent
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
+
             RowLayout {
                 anchors.fill: parent
                 spacing: 1
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.destinationTemperature : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     width: 80
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
                 }
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.destinationTemperatureUnit : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                 }
@@ -230,12 +230,14 @@ Window {
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
 
-            TextInput {
+            Text {
                 text: weatherViewModel ? weatherViewModel.destinationCondition : ""
                 font.pixelSize: 24
                 font.family: encodeSansThin.name
+                font.weight: Font.Thin
+                color: "#000000"
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignTop
@@ -248,26 +250,30 @@ Window {
         Rectangle {
             width: parent.width
             height: itemHeight
-            color: "#ffffc5"
+            color: "transparent"
 
             RowLayout {
                 anchors.fill: parent
                 spacing: 1
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.destinationWindSpeed : ""
                     font.pixelSize: 24
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     width: 80
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
                 }
 
-                TextInput {
+                Text {
                     text: weatherViewModel ? weatherViewModel.destinationWindSpeedUnit : ""
                     font.pixelSize: 18
                     font.family: encodeSansThin.name
+                    font.weight: Font.Thin
+                    color: "#000000"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     horizontalAlignment: Text.AlignLeft
@@ -277,92 +283,58 @@ Window {
         }
     }
 
-
+    // --- Current Weather Block ---
     RowLayout {
         id: rowWeather1
-
-        x: 500
-        y: 248
-
         width: 100
         height: 75
-
         z: 2
-
         Layout.fillWidth: true
         Layout.fillHeight: true
-
         spacing: 1
 
         Rectangle {
-            id: rec1
-
             width: 50
-
             color: "#00ffffff"
-
             Layout.fillHeight: true
 
             Image {
-                id: curImage
-
                 anchors.fill: parent
-
                 source: weatherViewModel ? weatherViewModel.currentConditionIcon : ""
-
                 fillMode: Image.PreserveAspectFit
             }
         }
 
         Rectangle {
-            id: rec2
-
             width: 75
-
             color: "#00ffffff"
-
             Layout.fillHeight: true
 
             ColumnLayout {
-                id: state1
-
                 anchors.fill: parent
-
                 z: 2
-
                 spacing: 1
 
                 Rectangle {
-                    id: rec3
-
-                    color: "#ffffc5"
-
                     width: 250
-
                     Layout.fillHeight: true
+                    color: "transparent"
 
-                    TextInput {
-                        id: curCity1
-
+                    Text {
                         text: weatherViewModel ? weatherViewModel.currentProvinceName : ""
                         font.pixelSize: 24
                         font.family: encodeSansThin.name
-
+                        font.weight: Font.Thin
+                        color: "#000000"
                         anchors.fill: parent
-
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignBottom
                     }
                 }
 
                 Rectangle {
-                    id: rec4
-
-                    color: "#ffffc5"
-
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-
                     clip: true
 
                     ListView {
@@ -379,9 +351,6 @@ Window {
                             width: parent.width
                             height: itemHeight
                             sourceComponent: modelData
-                            Behavior on opacity {
-                                NumberAnimation { duration: 200 }
-                            }
                         }
                     }
 
@@ -397,89 +366,57 @@ Window {
         }
     }
 
+    // --- Destination Weather Block ---
     RowLayout {
         id: rowWeather2
-
-        x: 500
-        y: 248
-
         width: 100
         height: 75
-
         visible: false
-
         z: 1
-
         Layout.fillWidth: true
         Layout.fillHeight: true
-
         spacing: 1
 
         Rectangle {
-            id: rec13
-
             width: 50
-
             color: "#00ffffff"
-
             Layout.fillHeight: true
 
             Image {
-                id: curImage2
-
                 anchors.fill: parent
-
                 source: weatherViewModel ? weatherViewModel.destinationConditionIcon : ""
-
                 fillMode: Image.PreserveAspectFit
             }
         }
 
         Rectangle {
-            id: rec14
-
             width: 75
-
             color: "#00ffffff"
-
             Layout.fillHeight: true
 
             ColumnLayout {
-                id: state6
-
                 anchors.fill: parent
-
                 z: 1
-
                 spacing: 1
 
                 Rectangle {
-                    id: rec15
-
-                    color: "#ffffc5"
-
                     width: 250
-
                     Layout.fillHeight: true
+                    color: "transparent"
 
-                    TextInput {
-                        id: curCity6
-
+                    Text {
                         text: weatherViewModel ? weatherViewModel.destinationProvinceName : ""
                         font.pixelSize: 24
                         font.family: encodeSansThin.name
-
+                        font.weight: Font.Thin
+                        color: "#000000"
                         anchors.fill: parent
-
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignBottom
                     }
                 }
 
                 Rectangle {
-                    id: rec16
-
-                    color: "#ffffc5"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true

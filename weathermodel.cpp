@@ -13,7 +13,7 @@ WeatherModel::WeatherModel(QObject *parent)
     m_destination.province = NGHEAN;
     m_destination.temperature = 25;
     m_destination.temperatureUnit = DEGREE;
-    m_destination.condition = CLOUDY;
+    m_destination.condition = PARTLYCLOUDY;
     m_destination.windSpeed = 1;
     m_destination.windSpeedUnit = METERSPERSECOND;
 }
@@ -66,96 +66,94 @@ qint8 WeatherModel::getDestinationWindSpeedUnit() const {
     return static_cast<qint8>(m_destination.windSpeedUnit);
 }
 
-void WeatherModel::setCurrentProvinceName(qint8 id) {
+void WeatherModel::setCurrentProvinceName(const qint8 id) {
     if (id < ANGIANG || id > VINHLONG) return;
 
     auto newProvince = static_cast<Province>(id);
     if (m_current.province != newProvince) m_current.province = newProvince;
 }
 
-void WeatherModel::setCurrentTemperature(qint8 temperature) {
+void WeatherModel::setCurrentTemperature(const qint8 temperature) {
     if (m_current.temperature != temperature) m_current.temperature = temperature;
 }
 
-void WeatherModel::setCurrentTemperatureUnit(qint8 unit) {
+void WeatherModel::setCurrentTemperatureUnit(const qint8 unit) {
     if (unit < DEGREE || unit > KELVIN) return;
 
     auto newUnit = static_cast<TemperatureUnit>(unit);
     if (m_current.temperatureUnit != newUnit) m_current.temperatureUnit = newUnit;
 }
 
-void WeatherModel::setCurrentCondition(qint8 condition) {
+void WeatherModel::setCurrentCondition(const qint8 condition) {
     auto newCondition = static_cast<Condition>(condition);
     if (m_current.condition != newCondition) m_current.condition = newCondition;
 }
 
-void WeatherModel::setCurrentWindSpeed(qint8 windspeed) {
+void WeatherModel::setCurrentWindSpeed(const qint8 windspeed) {
     if (m_current.windSpeed != windspeed) m_current.windSpeed = windspeed;
 }
 
-void WeatherModel::setCurrentWindSpeedUnit(qint8 unit) {
+void WeatherModel::setCurrentWindSpeedUnit(const qint8 unit) {
     if (unit < METERSPERSECOND || unit > MILESPERHOUR) return;
 
     auto newUnit = static_cast<WindSpeedUnit>(unit);
     if (m_current.windSpeedUnit != newUnit) m_current.windSpeedUnit = newUnit;
 }
 
-void WeatherModel::setDestinationProvinceName(qint8 id) {
+void WeatherModel::setDestinationProvinceName(const qint8 id) {
     if (id < ANGIANG || id > VINHLONG) return;
 
     auto newProvince = static_cast<Province>(id);
     if (m_destination.province != newProvince) m_destination.province = newProvince;
 }
 
-void WeatherModel::setDestinationTemperature(qint8 temperature) {
+void WeatherModel::setDestinationTemperature(const qint8 temperature) {
     if (m_destination.temperature != temperature) m_destination.temperature = temperature;
 }
 
-void WeatherModel::setDestinationTemperatureUnit(qint8 unit) {
+void WeatherModel::setDestinationTemperatureUnit(const qint8 unit) {
     if (unit < DEGREE || unit > KELVIN) return;
 
     auto newUnit = static_cast<TemperatureUnit>(unit);
     if (m_destination.temperatureUnit != newUnit) m_destination.temperatureUnit = newUnit;
 }
 
-void WeatherModel::setDestinationCondition(qint8 condition) {
+void WeatherModel::setDestinationCondition(const qint8 condition) {
     auto newCondition = static_cast<Condition>(condition);
     if (m_destination.condition != newCondition) m_destination.condition = newCondition;
 }
 
-void WeatherModel::setDestinationWindSpeed(qint8 windspeed) {
+void WeatherModel::setDestinationWindSpeed(const qint8 windspeed) {
     if (m_destination.windSpeed != windspeed) m_destination.windSpeed = windspeed;
 }
 
-void WeatherModel::setDestinationWindSpeedUnit(qint8 unit) {
+void WeatherModel::setDestinationWindSpeedUnit(const qint8 unit) {
     if (unit < METERSPERSECOND || unit > MILESPERHOUR) return;
 
     auto newUnit = static_cast<WindSpeedUnit>(unit);
     if (m_destination.windSpeedUnit != newUnit) m_destination.windSpeedUnit = newUnit;
 }
 
-qint8 WeatherModel::convertCelsiusToFahrenheit(qint8 celsius) {
+qint8 WeatherModel::convertCelsiusToFahrenheit(const qint8 celsius) {
     return static_cast<qint8>((celsius * 9.0f / 5.0f) + 32.0f + 0.5f);
 }
 
-qint8 WeatherModel::convertFahrenheitToCelsius(qint8 fahrenheit)
-{
+qint8 WeatherModel::convertFahrenheitToCelsius(const qint8 fahrenheit) {
     return static_cast<qint8>((fahrenheit - 32.0f) * 5.0f / 9.0f + 0.5f);
 }
 
-qint8 WeatherModel::convertCelsiusToKelvin(qint8 celsius) {
+qint8 WeatherModel::convertCelsiusToKelvin(const qint8 celsius) {
     return static_cast<qint8>(celsius + 273.15f + 0.5f);
 }
 
-qint8 WeatherModel::convertKelvinToCelsius(qint8 kelvin)
-{
+qint8 WeatherModel::convertKelvinToCelsius(const qint8 kelvin) {
     return static_cast<qint8>(kelvin - 273.15f - 0.5f);
 }
 
-qint8 WeatherModel::convertMetersPerSecondToKilometersPerHour(qint8 mps) {
+qint8 WeatherModel::convertMetersPerSecondToKilometersPerHour(const qint8 mps) {
     return static_cast<qint8>(mps * 3.6f + 0.5f);
 }
 
-qint8 WeatherModel::convertMetersPerSecondToMilesPerHour(qint8 mps) {
+qint8 WeatherModel::convertMetersPerSecondToMilesPerHour(const qint8 mps) {
     return static_cast<qint8>(mps * 2.23694f + 0.5f);
 }

@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
-
 qt_add_executable(appWeatherApp_MVVM
     main.cpp
 )
@@ -17,23 +16,41 @@ qt_add_qml_module(appWeatherApp_MVVM
     VERSION 1.0
     QML_FILES
         Main.qml
-        SOURCES weathermodel.h weathermodel.cpp
-        SOURCES weatherviewmodel.h weatherviewmodel.cpp
-        QML_FILES WeatherView.qml
-        QML_FILES WeatherViewEditor.qml
-        QML_FILES
-        RESOURCES assets/images/Cloudy100.png assets/images/PartlyCloudy100.png assets/images/Rainy100.png assets/images/Sunny100.png
-        RESOURCES assets/images/Foggy100.png assets/images/Stormy100.png
-        RESOURCES assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf
-        QML_FILES
-        QML_FILES
+        ARHUDEditor.qml
+        WeatherView.qml
+        WeatherViewEditor.qml
+        MediaView.qml
+    SOURCES
+        weathermodel.h weathermodel.cpp
+        weatherviewmodel.h weatherviewmodel.cpp
+        mediamodel.h mediamodel.cpp
+        mediaviewmodel.h mediaviewmodel.cpp
+        errormanager.h errormanager.cpp
+    RESOURCES
+        assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-ExtraLight.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-Light.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-Regular.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-Medium.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-SemiBold.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-Bold.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-ExtraBold.ttf
+        assets/fonts/Encode_Sans/static/EncodeSans-Black.ttf
+        assets/images/media/AmazonMusic100.png
+        assets/images/media/AppleMusic100.png
+        assets/images/media/Radio100.png
+        assets/images/media/SoundCloud100.png
+        assets/images/media/Spotify100.png
+        assets/images/media/USB100.png
+        assets/images/weather/Cloudy100.png
+        assets/images/weather/Foggy100.png
+        assets/images/weather/PartlyCloudy100.png
+        assets/images/weather/Rainy100.png
+        assets/images/weather/Stormy100.png
+        assets/images/weather/Sunny100.png
 )
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 set_target_properties(appWeatherApp_MVVM PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appWeatherApp_MVVM
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE

@@ -72,12 +72,9 @@ public:
 
     struct WeatherData {
         Province            province;
-
         qint8               temperature;
         TemperatureUnit     temperatureUnit;
-
         Condition           condition;
-
         qint8               windSpeed;
         WindSpeedUnit       windSpeedUnit;
     };
@@ -98,26 +95,26 @@ public:
     qint8 getDestinationWindSpeed()         const;
     qint8 getDestinationWindSpeedUnit()     const;
 
-    void setCurrentProvinceName(qint8 id);
-    void setCurrentTemperature(qint8 temperature);
-    void setCurrentTemperatureUnit(qint8 unit);
-    void setCurrentCondition(qint8 condition);
-    void setCurrentWindSpeed(qint8 windspeed);
-    void setCurrentWindSpeedUnit(qint8 unit);
+    void setCurrentProvinceName(const qint8 id);
+    void setCurrentTemperature(const qint8 temperature);
+    void setCurrentTemperatureUnit(const qint8 unit);
+    void setCurrentCondition(const qint8 condition);
+    void setCurrentWindSpeed(const qint8 windspeed);
+    void setCurrentWindSpeedUnit(const qint8 unit);
 
-    void setDestinationProvinceName(qint8 id);
-    void setDestinationTemperature(qint8 temperature);
-    void setDestinationTemperatureUnit(qint8 unit);
-    void setDestinationCondition(qint8 condition);
-    void setDestinationWindSpeed(qint8 windspeed);
-    void setDestinationWindSpeedUnit(qint8 unit);
+    void setDestinationProvinceName(const qint8 id);
+    void setDestinationTemperature(const qint8 temperature);
+    void setDestinationTemperatureUnit(const qint8 unit);
+    void setDestinationCondition(const qint8 condition);
+    void setDestinationWindSpeed(const qint8 windspeed);
+    void setDestinationWindSpeedUnit(const qint8 unit);
 
-    static qint8 convertCelsiusToFahrenheit(qint8 celsius);
-    static qint8 convertFahrenheitToCelsius(qint8 fahrenheit);
-    static qint8 convertCelsiusToKelvin(qint8 celsius);
-    static qint8 convertKelvinToCelsius(qint8 kelvin);
-    static qint8 convertMetersPerSecondToKilometersPerHour(qint8 mps);
-    static qint8 convertMetersPerSecondToMilesPerHour(qint8 mps);
+    static qint8 convertCelsiusToFahrenheit(const qint8 celsius);
+    static qint8 convertFahrenheitToCelsius(const qint8 fahrenheit);
+    static qint8 convertCelsiusToKelvin(const qint8 celsius);
+    static qint8 convertKelvinToCelsius(const qint8 kelvin);
+    static qint8 convertMetersPerSecondToKilometersPerHour(const qint8 mps);
+    static qint8 convertMetersPerSecondToMilesPerHour(const qint8 mps);
 
 private:
     WeatherData m_current;
