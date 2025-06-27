@@ -5,51 +5,83 @@ project(WeatherApp_MVVM VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Scxml)
 
+# === Source Files ===
+set(SOURCE_FILES
+    weathermodel.cpp
+    weatherviewmodel.cpp
+    mediamodel.cpp
+    mediaviewmodel.cpp
+    errormanager.cpp
+)
+
+# === Header Files ===
+set(HEADER_FILES
+    weathermodel.h
+    weatherviewmodel.h
+    mediamodel.h
+    mediaviewmodel.h
+    errormanager.h
+)
+
+# === QML Files ===
+set(QML_FILES
+    Main.qml
+    ARHUDEditor.qml
+    WeatherView.qml
+    WeatherViewEditor.qml
+    MediaView.qml
+)
+
+# === Asset Files ===
+set(FONT_FILES
+    assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-ExtraLight.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-Light.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-Regular.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-Medium.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-SemiBold.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-Bold.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-ExtraBold.ttf
+    assets/fonts/Encode_Sans/static/EncodeSans-Black.ttf
+)
+
+set(IMAGE_FILES
+    assets/images/media/AmazonMusic100.png
+    assets/images/media/AppleMusic100.png
+    assets/images/media/Radio100.png
+    assets/images/media/SoundCloud100.png
+    assets/images/media/Spotify100.png
+    assets/images/media/USB100.png
+    assets/images/weather/Cloudy100.png
+    assets/images/weather/Foggy100.png
+    assets/images/weather/PartlyCloudy100.png
+    assets/images/weather/Rainy100.png
+    assets/images/weather/Stormy100.png
+    assets/images/weather/Sunny100.png
+)
+
+# === SCXML File ===
+set(SCXML_FILE
+    ErrorManager.scxml
+)
+
+# === Executable ===
 qt_add_executable(appWeatherApp_MVVM
     main.cpp
 )
 
+# === QML Module with Grouped Resources ===
 qt_add_qml_module(appWeatherApp_MVVM
     URI WeatherApp_MVVM
     VERSION 1.0
-    QML_FILES
-        Main.qml
-        ARHUDEditor.qml
-        WeatherView.qml
-        WeatherViewEditor.qml
-        MediaView.qml
-    SOURCES
-        weathermodel.h weathermodel.cpp
-        weatherviewmodel.h weatherviewmodel.cpp
-        mediamodel.h mediamodel.cpp
-        mediaviewmodel.h mediaviewmodel.cpp
-        errormanager.h errormanager.cpp
-    RESOURCES
-        assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-ExtraLight.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-Light.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-Regular.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-Medium.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-SemiBold.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-Bold.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-ExtraBold.ttf
-        assets/fonts/Encode_Sans/static/EncodeSans-Black.ttf
-        assets/images/media/AmazonMusic100.png
-        assets/images/media/AppleMusic100.png
-        assets/images/media/Radio100.png
-        assets/images/media/SoundCloud100.png
-        assets/images/media/Spotify100.png
-        assets/images/media/USB100.png
-        assets/images/weather/Cloudy100.png
-        assets/images/weather/Foggy100.png
-        assets/images/weather/PartlyCloudy100.png
-        assets/images/weather/Rainy100.png
-        assets/images/weather/Stormy100.png
-        assets/images/weather/Sunny100.png
+    QML_FILES ${QML_FILES}
+    SOURCES ${SOURCE_FILES} ${HEADER_FILES}
+    RESOURCES ${SCXML_FILE} ${FONT_FILES} ${IMAGE_FILES}
 )
 
+# === Target Properties ===
 set_target_properties(appWeatherApp_MVVM PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -57,10 +89,13 @@ set_target_properties(appWeatherApp_MVVM PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+# === Linking ===
 target_link_libraries(appWeatherApp_MVVM
     PRIVATE Qt6::Quick
+    PRIVATE Qt6::Scxml
 )
 
+# === Install Rules ===
 include(GNUInstallDirs)
 install(TARGETS appWeatherApp_MVVM
     BUNDLE DESTINATION .

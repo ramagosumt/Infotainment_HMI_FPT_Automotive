@@ -2,12 +2,15 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Window {
+ApplicationWindow {
     id: editorWindow
     title: "Weather Editor"
+
     visible: true
+
     width: 600
     height: 400
+
     x: 900
     y: 200
 
