@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+       xmlns:qt="http://www.qt.io/2015/02/scxml-ext"
+       version="1.0"
+       binding="early"
+       name="ErrorManager"
+       qt:editorversion="16.0.1"
+       initial="Connected">
+
+    <!-- Top Left -->
+    <state id="Connected">
+        <qt:editorinfo geometry="0;0;200;100" scenegeometry="0;0;200;100"/>
+        <onentry>
+            <send event="toggleConnection" delay="18s"/>
+        </onentry>
+        <transition event="connectionLost" target="Checking"/>
+        <transition event="toggleConnection" target="ToggleCheck"/>
+    </state>
+
+    <!-- Top Right -->
+    <state id="ToggleCheck">
+        <qt:editorinfo geometry="1000;0;200;100" scenegeometry="1000;0;200;100"/>
+        <onentry/>
+        <transition event="connectionOk" target="Connected"/>
+        <transition event="connectionLost" target="Checking"/>
+    </state>
+
+    <!-- Bottom Right -->
+    <state id="Checking">
+        <qt:editorinfo geometry="1000;600;200;100" scenegeometry="1000;600;200;100"/>
+        <onentry>
+            <send event="checkTimeout" delay="10s"/>
+        </onentry>
+        <transition event="connectionRecovered" target="Connected"/>
+        <transition event="checkTimeout" target="Reconnecting"/>
+    </state>
+
+    <!-- Bottom Left -->
+    <state id="Reconnecting">
+        <qt:editorinfo geometry="0;600;200;100" scenegeometry="0;600;200;100"/>
+        <onentry>
+            <send event="reconnectTimeout" delay="5s"/>
+        </onentry>
+        <transition event="connectionRecovered" target="Connected"/>
+        <transition event="reconnectTimeout" target="NoDisplayError"/>
+    </state>
+
+    <!-- Center of Rectangle -->
+    <state id="NoDisplayError">
+        <qt:editorinfo geometry="500;300;200;100" scenegeometry="500;300;200;100"/>
+        <onentry>
+            <send event="retryAttempt" delay="18s"/>
+        </onentry>
+        <transition event="connectionRecovered" target="Connected"/>
+        <transition event="retryAttempt" target="Checking"/>
+    </state>
+
+</scxml>

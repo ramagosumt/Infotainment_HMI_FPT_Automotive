@@ -3,7 +3,7 @@
 MediaModel::MediaModel(QObject *parent)
     : QObject{parent}
 {
-    m_current = songs[12];
+    m_current = songs[1];
 
     m_next.source = UNSPECIFIED;
     m_next.album = "";

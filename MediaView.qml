@@ -7,7 +7,7 @@ Item {
     id: win
     objectName: "mediaViewWindow"
 
-    visible: true
+    visible: editorWindow.currentState === 0
 
     property int horizontalScrollPeriod: 17
     property bool didFirstScroll: false

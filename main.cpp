@@ -2,9 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
+#include <QScxmlStateMachine>
 
 #include "weatherviewmodel.h"
 #include "mediaviewmodel.h"
+#include "errormanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,8 +17,16 @@ int main(int argc, char *argv[])
     WeatherViewModel weatherViewModel;
     MediaViewModel mediaViewModel;
 
+    ErrorManager errorManager;
+
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
     engine.rootContext()->setContextProperty("mediaViewModel", &mediaViewModel);
+    engine.rootContext()->setContextProperty("errorManager", &errorManager);
+
+    QQmlComponent editorComponent(&engine, QUrl("qrc:/WeatherApp_MVVM/ARHUDEditor.qml"));
+    QObject* editorWindow = editorComponent.create();
+
+    engine.rootContext()->setContextProperty("editorWindow", editorWindow);
 
     const QUrl url(QStringLiteral("qrc:/WeatherApp_MVVM/Main.qml"));
     QObject::connect(
@@ -30,24 +40,22 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
     engine.load(url);
 
-    QObject *rootObject = engine.rootObjects().first();
+    QObject* rootObject = engine.rootObjects().first();
 
-    QObject *weatherViewRoot = rootObject->objectName() == "weatherViewWindow"
+    QObject* weatherViewRoot = rootObject->objectName() == "weatherViewWindow"
                                    ? rootObject
                                    : rootObject->findChild<QObject*>("weatherViewWindow");
 
-    QObject *mediaViewRoot = rootObject->objectName() == "mediaViewWindow"
+    QObject* mediaViewRoot = rootObject->objectName() == "mediaViewWindow"
                                    ? rootObject
                                    : rootObject->findChild<QObject*>("mediaViewWindow");
 
-    QQmlContext *context = new QQmlContext(engine.rootContext());
+    QQmlContext* context = new QQmlContext(engine.rootContext());
     context->setContextProperty("weatherViewModel", &weatherViewModel);
     context->setContextProperty("mediaViewModel", &mediaViewModel);
     context->setContextProperty("weatherViewWindow", weatherViewRoot);
     context->setContextProperty("mediaViewWindow", mediaViewRoot);
-
-    QQmlComponent editorComponent(&engine, QUrl("qrc:/WeatherApp_MVVM/ARHUDEditor.qml"));
-    QObject *editorWindow = editorComponent.create(context);
+    context->setContextProperty("errorManager", &errorManager);
 
     return app.exec();
 }
