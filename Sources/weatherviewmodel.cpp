@@ -1,256 +1,264 @@
 #include "weatherviewmodel.h"
 
 WeatherViewModel::WeatherViewModel(QObject *parent)
-    : QObject{parent}
+    : QObject{parent}, weatherModel(new WeatherModel(this)), m_ownsModel(true)
 {}
 
+WeatherViewModel::WeatherViewModel(WeatherModel* model, QObject *parent)
+    : QObject(parent), weatherModel(model)
+{}
+
+WeatherViewModel::~WeatherViewModel() {
+    if (m_ownsModel && weatherModel) delete weatherModel;
+}
+
 QString WeatherViewModel::getCurrentProvinceName() const {
-    return convertProvinceToString(weatherModel.getCurrentProvinceName());
+    return convertProvinceToString(weatherModel->getCurrentProvinceName());
 }
 
 QString WeatherViewModel::getCurrentTemperature() const {
-    return QString::number(weatherModel.getCurrentTemperature());
+    return QString::number(weatherModel->getCurrentTemperature());
 }
 
 QString WeatherViewModel::getCurrentTemperatureUnit() const {
-    return convertTemperatureUnitToString(weatherModel.getCurrentTemperatureUnit());
+    return convertTemperatureUnitToString(weatherModel->getCurrentTemperatureUnit());
 }
 
 QString WeatherViewModel::getCurrentCondition() const {
-    return convertConditionToString(weatherModel.getCurrentCondition());
+    return convertConditionToString(weatherModel->getCurrentCondition());
 }
 
 QString WeatherViewModel::getCurrentWindSpeed() const {
-    return QString::number(weatherModel.getCurrentWindSpeed());
+    return QString::number(weatherModel->getCurrentWindSpeed());
 }
 
 QString WeatherViewModel::getCurrentWindSpeedUnit() const {
-    return convertWindSpeedUnitToString(weatherModel.getCurrentWindSpeedUnit());
+    return convertWindSpeedUnitToString(weatherModel->getCurrentWindSpeedUnit());
 }
 
 QString WeatherViewModel::getDestinationProvinceName() const {
-    return convertProvinceToString(weatherModel.getDestinationProvinceName());
+    return convertProvinceToString(weatherModel->getDestinationProvinceName());
 }
 
 QString WeatherViewModel::getDestinationTemperature() const {
-    return QString::number(weatherModel.getDestinationTemperature());
+    return QString::number(weatherModel->getDestinationTemperature());
 }
 
 QString WeatherViewModel::getDestinationTemperatureUnit() const {
-    return convertTemperatureUnitToString(weatherModel.getDestinationTemperatureUnit());
+    return convertTemperatureUnitToString(weatherModel->getDestinationTemperatureUnit());
 }
 
 QString WeatherViewModel::getDestinationCondition() const {
-    return convertConditionToString(weatherModel.getDestinationCondition());
+    return convertConditionToString(weatherModel->getDestinationCondition());
 }
 
 QString WeatherViewModel::getDestinationWindSpeed() const {
-    return QString::number(weatherModel.getDestinationWindSpeed());
+    return QString::number(weatherModel->getDestinationWindSpeed());
 }
 
 QString WeatherViewModel::getDestinationWindSpeedUnit() const {
-    return convertWindSpeedUnitToString(weatherModel.getDestinationWindSpeedUnit());
+    return convertWindSpeedUnitToString(weatherModel->getDestinationWindSpeedUnit());
 }
 
 qint8 WeatherViewModel::getCurrentProvinceRaw() const {
-    return weatherModel.getCurrentProvinceName();
+    return weatherModel->getCurrentProvinceName();
 }
 
 qint8 WeatherViewModel::getCurrentTemperatureRaw() const {
-    return weatherModel.getCurrentTemperature();
+    return weatherModel->getCurrentTemperature();
 }
 
 qint8 WeatherViewModel::getCurrentTemperatureUnitRaw() const {
-    return weatherModel.getCurrentTemperatureUnit();
+    return weatherModel->getCurrentTemperatureUnit();
 }
 
 qint8 WeatherViewModel::getCurrentConditionRaw() const {
-    return weatherModel.getCurrentCondition();
+    return weatherModel->getCurrentCondition();
 }
 
 qint8 WeatherViewModel::getCurrentWindSpeedRaw() const {
-    return weatherModel.getCurrentWindSpeed();
+    return weatherModel->getCurrentWindSpeed();
 }
 
 qint8 WeatherViewModel::getCurrentWindSpeedUnitRaw() const {
-    return weatherModel.getCurrentWindSpeedUnit();
+    return weatherModel->getCurrentWindSpeedUnit();
 }
 
 qint8 WeatherViewModel::getDestinationProvinceRaw() const {
-    return weatherModel.getDestinationProvinceName();
+    return weatherModel->getDestinationProvinceName();
 }
 
 qint8 WeatherViewModel::getDestinationTemperatureRaw() const {
-    return weatherModel.getDestinationTemperature();
+    return weatherModel->getDestinationTemperature();
 }
 
 qint8 WeatherViewModel::getDestinationTemperatureUnitRaw() const {
-    return weatherModel.getDestinationTemperatureUnit();
+    return weatherModel->getDestinationTemperatureUnit();
 }
 
 qint8 WeatherViewModel::getDestinationConditionRaw() const {
-    return weatherModel.getDestinationCondition();
+    return weatherModel->getDestinationCondition();
 }
 
 qint8 WeatherViewModel::getDestinationWindSpeedRaw() const {
-    return weatherModel.getDestinationWindSpeed();
+    return weatherModel->getDestinationWindSpeed();
 }
 
 qint8 WeatherViewModel::getDestinationWindSpeedUnitRaw() const {
-    return weatherModel.getDestinationWindSpeedUnit();
+    return weatherModel->getDestinationWindSpeedUnit();
 }
 
 QString WeatherViewModel::getCurrentConditionIcon() const {
-    switch (weatherModel.getCurrentCondition()) {
+    switch (weatherModel->getCurrentCondition()) {
     case WeatherModel::CLOUDY:
-        return "assets/images/weather/Cloudy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Cloudy100.png";
     case WeatherModel::FOGGY:
-        return "assets/images/weather/Foggy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Foggy100.png";
     case WeatherModel::PARTLYCLOUDY:
-        return "assets/images/weather/PartlyCloudy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/PartlyCloudy100.png";
     case WeatherModel::RAINY:
-        return "assets/images/weather/Rainy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Rainy100.png";
     case WeatherModel::STORMY:
-        return "assets/images/weather/Stormy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Stormy100.png";
     case WeatherModel::SUNNY:
-        return "assets/images/weather/Sunny100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Sunny100.png";
     default:
         return "Unknown";
     }
 }
 
 QString WeatherViewModel::getDestinationConditionIcon() const {
-    switch (weatherModel.getDestinationCondition()) {
+    switch (weatherModel->getDestinationCondition()) {
     case WeatherModel::CLOUDY:
-        return "assets/images/weather/Cloudy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Cloudy100.png";
     case WeatherModel::FOGGY:
-        return "assets/images/weather/Foggy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Foggy100.png";
     case WeatherModel::PARTLYCLOUDY:
-        return "assets/images/weather/PartlyCloudy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/PartlyCloudy100.png";
     case WeatherModel::RAINY:
-        return "assets/images/weather/Rainy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Rainy100.png";
     case WeatherModel::STORMY:
-        return "assets/images/weather/Stormy100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Stormy100.png";
     case WeatherModel::SUNNY:
-        return "assets/images/weather/Sunny100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/weather/Sunny100.png";
     default:
         return "Unknown";
     }
 }
 
 void WeatherViewModel::setCurrentProvinceName(const qint8 id) {
-    if (id == weatherModel.getCurrentProvinceName()) return;
-    weatherModel.setCurrentProvinceName(id);
+    if (id == weatherModel->getCurrentProvinceName()) return;
+    weatherModel->setCurrentProvinceName(id);
     emit onCurrentProvinceNameChanged();
 }
 
 void WeatherViewModel::setCurrentTemperature(const qint8 temperature) {
-    if (temperature == weatherModel.getCurrentTemperature()) return;
-    weatherModel.setCurrentTemperature(temperature);
+    if (temperature == weatherModel->getCurrentTemperature()) return;
+    weatherModel->setCurrentTemperature(temperature);
     emit onCurrentTemperatureChanged();
 }
 
 void WeatherViewModel::setCurrentTemperatureUnit(const qint8 unit) {
-    qint8 oldUnit = weatherModel.getCurrentTemperatureUnit();
+    qint8 oldUnit = weatherModel->getCurrentTemperatureUnit();
     if (unit == oldUnit) return;
 
-    qint8 temp = weatherModel.getCurrentTemperature();
+    qint8 temp = weatherModel->getCurrentTemperature();
     if (oldUnit == 1) temp = WeatherModel::convertFahrenheitToCelsius(temp);
     else if (oldUnit == 2) temp = WeatherModel::convertKelvinToCelsius(temp);
     if (unit == 1) temp = WeatherModel::convertCelsiusToFahrenheit(temp);
     else if (unit == 2) temp = WeatherModel::convertCelsiusToKelvin(temp);
 
-    weatherModel.setCurrentTemperature(temp);
-    weatherModel.setCurrentTemperatureUnit(unit);
+    weatherModel->setCurrentTemperature(temp);
+    weatherModel->setCurrentTemperatureUnit(unit);
 
     emit onCurrentTemperatureUnitChanged();
     emit onCurrentTemperatureChanged();
 }
 
 void WeatherViewModel::setCurrentCondition(const qint8 condition) {
-    if (condition == weatherModel.getCurrentCondition()) return;
-    weatherModel.setCurrentCondition(condition);
+    if (condition == weatherModel->getCurrentCondition()) return;
+    weatherModel->setCurrentCondition(condition);
     emit onCurrentConditionChanged();
     emit onCurrentConditionIconChanged();
 }
 
 void WeatherViewModel::setCurrentWindSpeed(const qint8 windspeed) {
-    if (windspeed == weatherModel.getCurrentWindSpeed()) return;
-    weatherModel.setCurrentWindSpeed(windspeed);
+    if (windspeed == weatherModel->getCurrentWindSpeed()) return;
+    weatherModel->setCurrentWindSpeed(windspeed);
     emit onCurrentWindSpeedChanged();
 }
 
 void WeatherViewModel::setCurrentWindSpeedUnit(const qint8 unit) {
-    qint8 oldUnit = weatherModel.getCurrentWindSpeedUnit();
+    qint8 oldUnit = weatherModel->getCurrentWindSpeedUnit();
     if (unit == oldUnit) return;
 
-    qint8 speed = weatherModel.getCurrentWindSpeed();
+    qint8 speed = weatherModel->getCurrentWindSpeed();
     if (oldUnit == 1) speed = static_cast<qint8>(speed / 3.6f + 0.5f);
     else if (oldUnit == 2) speed = static_cast<qint8>(speed / 2.23694f + 0.5f);
     if (unit == 1) speed = WeatherModel::convertMetersPerSecondToKilometersPerHour(speed);
     else if (unit == 2) speed = WeatherModel::convertMetersPerSecondToMilesPerHour(speed);
 
-    weatherModel.setCurrentWindSpeed(speed);
-    weatherModel.setCurrentWindSpeedUnit(unit);
+    weatherModel->setCurrentWindSpeed(speed);
+    weatherModel->setCurrentWindSpeedUnit(unit);
 
     emit onCurrentWindSpeedUnitChanged();
     emit onCurrentWindSpeedChanged();
 }
 
 void WeatherViewModel::setDestinationProvinceName(const qint8 id) {
-    if (id == weatherModel.getDestinationProvinceName()) return;
-    weatherModel.setDestinationProvinceName(id);
+    if (id == weatherModel->getDestinationProvinceName()) return;
+    weatherModel->setDestinationProvinceName(id);
     emit onDestinationProvinceNameChanged();
 }
 
 void WeatherViewModel::setDestinationTemperature(const qint8 temperature) {
-    if (temperature == weatherModel.getDestinationTemperature()) return;
-    weatherModel.setDestinationTemperature(temperature);
+    if (temperature == weatherModel->getDestinationTemperature()) return;
+    weatherModel->setDestinationTemperature(temperature);
     emit onDestinationTemperatureChanged();
 }
 
 void WeatherViewModel::setDestinationTemperatureUnit(const qint8 unit) {
-    qint8 oldUnit = weatherModel.getDestinationTemperatureUnit();
+    qint8 oldUnit = weatherModel->getDestinationTemperatureUnit();
     if (unit == oldUnit) return;
 
-    qint8 temp = weatherModel.getDestinationTemperature();
+    qint8 temp = weatherModel->getDestinationTemperature();
     if (oldUnit == 1) temp = WeatherModel::convertFahrenheitToCelsius(temp);
     else if (oldUnit == 2) temp = WeatherModel::convertKelvinToCelsius(temp);
     if (unit == 1) temp = WeatherModel::convertCelsiusToFahrenheit(temp);
     else if (unit == 2) temp = WeatherModel::convertCelsiusToKelvin(temp);
 
-    weatherModel.setDestinationTemperature(temp);
-    weatherModel.setDestinationTemperatureUnit(unit);
+    weatherModel->setDestinationTemperature(temp);
+    weatherModel->setDestinationTemperatureUnit(unit);
 
     emit onDestinationTemperatureUnitChanged();
     emit onDestinationTemperatureChanged();
 }
 
 void WeatherViewModel::setDestinationCondition(const qint8 condition) {
-    if (condition == weatherModel.getDestinationCondition()) return;
-    weatherModel.setDestinationCondition(condition);
+    if (condition == weatherModel->getDestinationCondition()) return;
+    weatherModel->setDestinationCondition(condition);
     emit onDestinationConditionChanged();
     emit onDestinationConditionIconChanged();
 }
 
 void WeatherViewModel::setDestinationWindSpeed(const qint8 windspeed) {
-    if (windspeed == weatherModel.getDestinationWindSpeed()) return;
-    weatherModel.setDestinationWindSpeed(windspeed);
+    if (windspeed == weatherModel->getDestinationWindSpeed()) return;
+    weatherModel->setDestinationWindSpeed(windspeed);
     emit onDestinationWindSpeedChanged();
 }
 
 void WeatherViewModel::setDestinationWindSpeedUnit(const qint8 unit) {
-    qint8 oldUnit = weatherModel.getDestinationWindSpeedUnit();
+    qint8 oldUnit = weatherModel->getDestinationWindSpeedUnit();
     if (unit == oldUnit) return;
 
-    qint8 speed = weatherModel.getDestinationWindSpeed();
+    qint8 speed = weatherModel->getDestinationWindSpeed();
     if (oldUnit == 1) speed = static_cast<qint8>(speed / 3.6f + 0.5f);
     else if (oldUnit == 2) speed = static_cast<qint8>(speed / 2.23694f + 0.5f);
     if (unit == 1) speed = WeatherModel::convertMetersPerSecondToKilometersPerHour(speed);
     else if (unit == 2) speed = WeatherModel::convertMetersPerSecondToMilesPerHour(speed);
 
-    weatherModel.setDestinationWindSpeed(speed);
-    weatherModel.setDestinationWindSpeedUnit(unit);
+    weatherModel->setDestinationWindSpeed(speed);
+    weatherModel->setDestinationWindSpeedUnit(unit);
 
     emit onDestinationWindSpeedUnitChanged();
     emit onDestinationWindSpeedChanged();

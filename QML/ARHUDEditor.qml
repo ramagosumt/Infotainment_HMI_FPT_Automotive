@@ -1,15 +1,17 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtScxml
 
-Window {
+ApplicationWindow {
     id: editorWindow
     title: "ARHUD Editor"
+    objectName: "editorWindow"
 
     visible: true
 
     width: 600
-    height: 600
+    height: 650
 
     x: 900
     y: 100
@@ -19,6 +21,8 @@ Window {
     property int selectedTempUnit: 0
     property int selectedWindUnit: 0
     property bool initialLoadDone: false
+
+    property int currentState: errorManagerEditor.currentState
 
     Component.onCompleted: {
         selectedTempUnit = weatherViewModel.getCurrentTemperatureUnitRaw()
@@ -190,7 +194,7 @@ Window {
                 GroupBox {
                     title: "Current Media"
                     Layout.fillWidth: true
-                    Layout.preferredWidth: 1  // Makes both share equal space
+                    Layout.preferredWidth: 1
 
                     ColumnLayout {
                         spacing: 6
@@ -308,6 +312,185 @@ Window {
                         )
 
                         nextSong.currentIndex = 0
+                    }
+                }
+            }
+        }
+
+        GroupBox {
+            id: errorManagerEditor
+            title: "Error Manager"
+
+            Layout.fillWidth: true
+
+            property int currentState: 0  // 0 = No Error, 1 = NoDisplay Error
+            property bool onEventSignal: true
+            property bool periodicSignal: true
+            property int periodicCurrentTime: 0
+            property int periodicTotalTime: 10
+            property int reconnectingTime: 0
+            property int reconnectingTotalTime: 5
+            property bool reconnectingActive: false
+            property bool isConnecting: true
+            property int isConnectingTime: 0
+            property int isConnectingTotalTime: 18
+            property string displayMessage: "System operating normally."
+
+            Timer {
+                interval: 1000
+                repeat: true
+                running: true
+                onTriggered: {
+                    errorManagerEditor.isConnectingTime += 1
+
+                    if (errorManagerEditor.isConnectingTime >= errorManagerEditor.isConnectingTotalTime) {
+                        errorManagerEditor.isConnecting = !errorManagerEditor.isConnecting
+                        errorManagerEditor.isConnectingTime = 0
+
+                        if (errorManagerEditor.isConnecting) {
+                            errorManagerEditor.periodicSignal = true
+                            errorManagerEditor.periodicCurrentTime = 0
+                            errorManagerEditor.reconnectingTime = 0
+                            errorManagerEditor.reconnectingActive = false
+                            errorManagerEditor.currentState = 0
+                            errorManagerEditor.displayMessage = "System operating normally."
+                        }
+                    }
+
+                    if (!errorManagerEditor.reconnectingActive) {
+                        errorManagerEditor.periodicCurrentTime += 1
+
+                        if (errorManagerEditor.periodicCurrentTime >= errorManagerEditor.periodicTotalTime) {
+                            if (errorManagerEditor.isConnecting) {
+                                errorManagerEditor.periodicCurrentTime = 0
+                            } else {
+                                errorManagerEditor.reconnectingActive = true
+                                errorManagerEditor.reconnectingTime = 0
+                            }
+                        }
+                    } else {
+                        errorManagerEditor.reconnectingTime += 1
+
+                        if (errorManagerEditor.isConnecting) {
+                            errorManagerEditor.reconnectingActive = false
+                            errorManagerEditor.periodicCurrentTime = 0
+                            errorManagerEditor.reconnectingTime = 0
+                        } else if (errorManagerEditor.reconnectingTime >= errorManagerEditor.reconnectingTotalTime) {
+                            errorManagerEditor.periodicSignal = false
+                            errorManagerEditor.reconnectingTime = 0
+                            errorManagerEditor.currentState = 1
+                            errorManagerEditor.displayMessage = "[NoDisplay Error] Periodic signal timeout. Elapsed time exceeded maximum limit of 10 seconds. Possible connection issue or unresponsive module detected. Please check system status."
+                        }
+                    }
+                }
+            }
+
+            ColumnLayout {
+                spacing: 6
+                Layout.fillWidth: true
+
+                Label {
+                    text: `State: ${errorManagerEditor.currentState === 0 ? "No Error" : "NoDisplay Error"}`
+                }
+
+                Item {
+                    width: parent.width
+                    height: checkbox1.implicitHeight
+
+                    Label {
+                        id: outOfRangeLabel
+                        text: "OnEvent Signal:"
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    CheckBox {
+                        id: checkbox1
+                        checked: errorManagerEditor.onEventSignal
+                        anchors.left: outOfRangeLabel.right
+                        anchors.leftMargin: 6
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: 2
+
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.AllButtons
+                        }
+                    }
+                }
+
+                Item {
+                    width: parent.width
+                    height: checkbox2.implicitHeight
+
+                    Label {
+                        id: periodicLabel
+                        text: "Periodic Signal:"
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    CheckBox {
+                        id: checkbox2
+                        checked: errorManagerEditor.periodicSignal
+                        anchors.left: periodicLabel.right
+                        anchors.leftMargin: 6
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: 2
+
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.AllButtons
+                        }
+                    }
+                }
+
+                Label {
+                    text: `Checking Timer: ${errorManagerEditor.periodicCurrentTime} / ${errorManagerEditor.periodicTotalTime} (s)`
+                }
+
+                Label {
+                    text: `Reconnecting Timer: ${errorManagerEditor.reconnectingTime} / ${errorManagerEditor.reconnectingTotalTime} (s)`
+                }
+
+                Label {
+                    text: `Is Connecting Timer: ${errorManagerEditor.isConnectingTime} / ${errorManagerEditor.isConnectingTotalTime} (s)`
+                }
+
+                Label {
+                    text: `Is Connecting: ${errorManagerEditor.isConnecting ? "True" : "False"}`
+                }
+
+                Rectangle {
+                    color: "transparent"
+                    radius: 4
+                    width: errorManagerEditor.width - 20
+                    height: textBlock.implicitHeight + 12
+
+                    Text {
+                        id: textBlock
+                        textFormat: Text.RichText
+                        wrapMode: Text.Wrap
+                        anchors.fill: parent
+
+                        text: {
+                            if (errorManagerEditor.currentState === 0) {
+                                return `<font color='green'>[No Error]</font> System operating normally.`
+                            } else {
+                                let msg = errorManagerEditor.displayMessage
+                                let openBracket = msg.indexOf('[')
+                                let closeBracket = msg.indexOf(']') + 1
+
+                                if (openBracket !== -1 && closeBracket > openBracket) {
+                                    let before = msg.substring(0, openBracket)
+                                    let bracket = msg.substring(openBracket, closeBracket)
+                                    let after = msg.substring(closeBracket)
+                                    return `${before}<font color='red'>${bracket}</font>${after}`
+                                } else {
+                                    return msg
+                                }
+                            }
+                        }
                     }
                 }
             }

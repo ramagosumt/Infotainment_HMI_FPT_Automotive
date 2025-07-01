@@ -28,6 +28,9 @@ class WeatherViewModel : public QObject
 
 public:
     explicit WeatherViewModel(QObject *parent = nullptr);
+    explicit WeatherViewModel(WeatherModel* model, QObject *parent = nullptr);
+
+    ~WeatherViewModel();
 
     Q_INVOKABLE QString getCurrentProvinceName()            const;
     Q_INVOKABLE QString getCurrentTemperature()             const;
@@ -75,7 +78,9 @@ public:
     Q_INVOKABLE void setDestinationWindSpeedUnit(const qint8 unit);
 
 private:
-    WeatherModel weatherModel;
+    WeatherModel* weatherModel;
+
+    bool m_ownsModel = false;
 
     QString convertProvinceToString(qint8 id)               const;
     QString convertTemperatureUnitToString(qint8 unit)      const;

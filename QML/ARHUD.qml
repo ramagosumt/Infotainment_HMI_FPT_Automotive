@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Window {
+ApplicationWindow {
     id: root
     title: qsTr("ARHUD WeatherApp UI")
 
@@ -18,7 +18,22 @@ Window {
 
     FontLoader {
         id: encodeSansThin
-        source: "assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf"
+        source: "qrc:/WeatherApp_MVVM/assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf"
+    }
+
+    ApplicationWindow {
+        id: win
+        title: qsTr("TreIsocraft version 0.0.0 by Tre.")
+
+        visible: false
+
+        width: 640
+        height: 480
+
+        x: (Screen.width - win.width) / 2
+        y: (Screen.height - win.height) / 2
+
+        color: "#ffffc5"
     }
 
     RowLayout {
