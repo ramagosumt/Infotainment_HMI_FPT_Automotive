@@ -1,16 +1,17 @@
 #include "mediamodel.h"
+#include "mediasampleapi.h"
 
 MediaModel::MediaModel(QObject *parent)
-    : QObject{parent}
+    : QObject(parent)
 {
-    m_current = songs[1];
+    const QList<MediaData>& songs = MediaSampleAPI::getSampleSongs();
 
-    m_next.source = UNSPECIFIED;
-    m_next.album = "";
-    m_next.artist = "";
-    m_next.song = "";
-    m_next.duration = 0;
-    m_next.time = 0;
+    if (songs.size() > 12)
+        m_current = songs[12];
+    else
+        m_current = { UNSPECIFIED, "", "", "", 0, 0 };
+
+    m_next = { UNSPECIFIED, "", "", "", 0, 0 };
 }
 
 MediaModel::MediaData MediaModel::getCurrentMedia() const {

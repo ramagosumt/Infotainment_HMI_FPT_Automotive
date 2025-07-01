@@ -1,108 +1,124 @@
 #include "mediaviewmodel.h"
+#include "mediasampleapi.h"
 
 MediaViewModel::MediaViewModel(QObject *parent)
-    : QObject{parent}
+    : QObject(parent), mediaModel(new MediaModel(this)), m_ownsModel(true)
 {}
+
+MediaViewModel::MediaViewModel(MediaModel* model, QObject *parent)
+    : QObject(parent), mediaModel(model)
+{}
+
+MediaViewModel::~MediaViewModel()
+{
+    if (m_ownsModel && mediaModel) delete mediaModel;
+}
 
 QStringList MediaViewModel::getSongDisplayList() const {
     QStringList list;
-    for (int i = 0; i < MediaModel::count; ++i) list.append(MediaModel::songs[i].song + " – " + MediaModel::songs[i].artist);
+    const QList<MediaModel::MediaData>& songs = MediaSampleAPI::getSampleSongs();
+
+    for (const auto& song : songs) list.append(song.song + " – " + song.artist);
 
     return list;
 }
 
 QVariantMap MediaViewModel::getSongObject(int index) const {
     QVariantMap map;
-    if (index < 0 || index >= MediaModel::count) return map;
+    const QList<MediaModel::MediaData>& songs = MediaSampleAPI::getSampleSongs();
 
-    map["source"] = MediaModel::songs[index].source;
-    map["album"] = MediaModel::songs[index].album;
-    map["artist"] = MediaModel::songs[index].artist;
-    map["song"] = MediaModel::songs[index].song;
-    map["duration"] = MediaModel::songs[index].duration;
-    map["time"] = MediaModel::songs[index].time;
+    if (index < 0 || index >= songs.size()) return map;
+
+    const MediaModel::MediaData& data = songs[index];
+
+    map["source"] = static_cast<qint8>(data.source);
+    map["album"] = data.album;
+    map["artist"] = data.artist;
+    map["song"] = data.song;
+    map["duration"] = data.duration;
+    map["time"] = data.time;
 
     return map;
 }
 
 QString MediaViewModel::getCurrentSource() const {
-    return convertSourceToString(mediaModel.getCurrentMedia().source);
+    return convertSourceToString(mediaModel->getCurrentMedia().source);
 }
 
 QString MediaViewModel::getCurrentAlbum() const {
-    return mediaModel.getCurrentMedia().album;
+    return mediaModel->getCurrentMedia().album;
 }
 
 QString MediaViewModel::getCurrentArtist() const {
-    return mediaModel.getCurrentMedia().artist;
+    return mediaModel->getCurrentMedia().artist;
 }
 
 QString MediaViewModel::getCurrentSong() const {
-    return mediaModel.getCurrentMedia().song;
+    return mediaModel->getCurrentMedia().song;
 }
 
 QString MediaViewModel::getCurrentDuration() const {
-    return convertDurationToString(mediaModel.getCurrentMedia().duration);
+    return convertDurationToString(mediaModel->getCurrentMedia().duration);
 }
 
 QString MediaViewModel::getCurrentTime() const {
-    return convertDurationToString(mediaModel.getCurrentMedia().time);
+    return convertDurationToString(mediaModel->getCurrentMedia().time);
 }
 
 QString MediaViewModel::getCurrentSourceIcon() const {
-    return getSourceIconPath(mediaModel.getCurrentMedia().source);
+    return getSourceIconPath(mediaModel->getCurrentMedia().source);
 }
 
 QString MediaViewModel::getNextSource() const {
-    return convertSourceToString(mediaModel.getNextMedia().source);
+    return convertSourceToString(mediaModel->getNextMedia().source);
 }
 
 QString MediaViewModel::getNextAlbum() const {
-    return mediaModel.getNextMedia().album;
+    return mediaModel->getNextMedia().album;
 }
 
 QString MediaViewModel::getNextArtist() const {
-    return mediaModel.getNextMedia().artist;
+    return mediaModel->getNextMedia().artist;
 }
 
 QString MediaViewModel::getNextSong() const {
-    return mediaModel.getNextMedia().song;
+    return mediaModel->getNextMedia().song;
 }
 
 QString MediaViewModel::getNextDuration() const {
-    return convertDurationToString(mediaModel.getNextMedia().duration);
+    return convertDurationToString(mediaModel->getNextMedia().duration);
 }
 
 QString MediaViewModel::getNextTime() const {
-    return convertDurationToString(mediaModel.getNextMedia().time);
+    return convertDurationToString(mediaModel->getNextMedia().time);
 }
 
 QString MediaViewModel::getNextSourceIcon() const {
-    return getSourceIconPath(mediaModel.getNextMedia().source);
+    return getSourceIconPath(mediaModel->getNextMedia().source);
 }
 
 qint8 MediaViewModel::getCurrentSourceRaw() const {
-    return static_cast<qint8>(mediaModel.getCurrentMedia().source);
+    return static_cast<qint8>(mediaModel->getCurrentMedia().source);
 }
 
 qint32 MediaViewModel::getCurrentDurationRaw() const {
-    return mediaModel.getCurrentMedia().duration;
+    return mediaModel->getCurrentMedia().duration;
 }
 
 qint32 MediaViewModel::getCurrentTimeRaw() const {
-    return mediaModel.getCurrentMedia().time;
+    return mediaModel->getCurrentMedia().time;
 }
 
 qint8 MediaViewModel::getNextSourceRaw() const {
-    return static_cast<qint8>(mediaModel.getNextMedia().source);
+    return static_cast<qint8>(mediaModel->getNextMedia().source);
 }
 
 qint32 MediaViewModel::getNextDurationRaw() const {
-    return mediaModel.getNextMedia().duration;
+    return mediaModel->getNextMedia().duration;
 }
 
 qint32 MediaViewModel::getNextTimeRaw() const {
-    return mediaModel.getNextMedia().time;
+    return mediaModel->getNextMedia().time;
 }
 
 void MediaViewModel::setCurrentMedia(const qint8 source, const QString &album, const QString &artist,
@@ -116,16 +132,7 @@ void MediaViewModel::setCurrentMedia(const qint8 source, const QString &album, c
     data.duration = duration;
     data.time = time;
 
-    mediaModel.setCurrentMedia(data);
-    emit onCurrentMediaChanged();
-}
-
-void MediaViewModel::setCurrentTime(qint32 time) {
-    if (time == mediaModel.getCurrentMedia().time) return;
-
-    MediaModel::MediaData data = mediaModel.getCurrentMedia();
-    data.time = time;
-    mediaModel.setCurrentMedia(data);
+    mediaModel->setCurrentMedia(data);
     emit onCurrentMediaChanged();
 }
 
@@ -140,8 +147,17 @@ void MediaViewModel::setNextMedia(const qint8 source, const QString &album, cons
     data.duration = duration;
     data.time = time;
 
-    mediaModel.setNextMedia(data);
+    mediaModel->setNextMedia(data);
     emit onNextMediaChanged();
+}
+
+void MediaViewModel::setCurrentTime(qint32 time) {
+    if (time == mediaModel->getCurrentMedia().time) return;
+
+    MediaModel::MediaData data = mediaModel->getCurrentMedia();
+    data.time = time;
+    mediaModel->setCurrentMedia(data);
+    emit onCurrentMediaChanged();
 }
 
 QString MediaViewModel::convertSourceToString(const qint8 source) const {
@@ -178,17 +194,17 @@ QString MediaViewModel::convertDurationToString(const qint32 duration) const {
 QString MediaViewModel::getSourceIconPath(qint8 source) const {
     switch (source) {
     case MediaModel::AMAZON:
-        return "assets/images/media/AmazonMusic100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/AmazonMusic100.png";
     case MediaModel::APPLE:
-        return "assets/images/media/AppleMusic100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/AppleMusic100.png";
     case MediaModel::RADIO:
-        return "assets/images/media/Radio100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/Radio100.png";
     case MediaModel::SOUNDCLOUD:
-        return "assets/images/media/SoundCloud100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/SoundCloud100.png";
     case MediaModel::SPOTIFY:
-        return "assets/images/media/Spotify100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/Spotify100.png";
     case MediaModel::USB:
-        return "assets/images/media/USB100.png";
+        return "qrc:/WeatherApp_MVVM/assets/images/media/USB100.png";
     case MediaModel::UNSPECIFIED:
     default:
         return "";
