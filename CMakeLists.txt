@@ -15,6 +15,7 @@ set(SOURCE_FILES
     Sources/mediaviewmodel.cpp
     Sources/mediasampleapi.cpp
     Sources/errormanager.cpp
+    Sources/main.cpp
 )
 
 # === Header Files ===
@@ -32,9 +33,7 @@ set(QML_FILES
     QML/ARHUD.qml
     QML/ARHUDEditor.qml
     QML/WeatherView.qml
-    QML/WeatherViewEditor.qml
     QML/MediaView.qml
-    QML/Main.qml
 )
 
 # === Asset Files ===
