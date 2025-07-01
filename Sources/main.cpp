@@ -2,9 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
+#include <QScxmlStateMachine>
 
 #include "weatherviewmodel.h"
 #include "mediaviewmodel.h"
+#include "errormanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,9 +21,17 @@ int main(int argc, char *argv[])
     WeatherViewModel weatherViewModel(&weatherModel);
     MediaViewModel mediaViewModel(&mediaModel);
 
+    // Error Manager
+    ErrorManager errorManager;
+
     // Global context properties
     engine.rootContext()->setContextProperty("weatherViewModel", &weatherViewModel);
     engine.rootContext()->setContextProperty("mediaViewModel", &mediaViewModel);
+    engine.rootContext()->setContextProperty("errorManager", &errorManager);
+
+    QQmlComponent editorComponent(&engine, QUrl("qrc:/WeatherApp_MVVM/QML/ARHUDEditor.qml"));
+    QObject* editorWindow = editorComponent.create();
+    engine.rootContext()->setContextProperty("editorWindow", editorWindow);
 
     // Load Main QML
     const QUrl mainUrl(QStringLiteral("qrc:/WeatherApp_MVVM/QML/ARHUD.qml"));
@@ -50,10 +60,7 @@ int main(int argc, char *argv[])
     editorContext->setContextProperty("mediaViewModel", &mediaViewModel);
     editorContext->setContextProperty("weatherViewWindow", weatherViewRoot);
     editorContext->setContextProperty("mediaViewWindow", mediaViewRoot);
-
-    QQmlComponent editorComponent(&engine, QUrl("qrc:/WeatherApp_MVVM/QML/ARHUDEditor.qml"));
-    QObject* editorWindow = editorComponent.create(editorContext);
-    if (!editorWindow) qWarning("Failed to create ARHUDEditor window.");
+    editorContext->setContextProperty("errorManager", &errorManager);
 
     return app.exec();
 }

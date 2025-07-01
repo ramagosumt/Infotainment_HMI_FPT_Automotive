@@ -36,21 +36,6 @@ ApplicationWindow {
         color: "#ffffc5"
     }
 
-    ApplicationWindow {
-        id: win
-        title: qsTr("TreIsocraft version 0.0.0 by Tre.")
-
-        visible: false
-
-        width: 640
-        height: 480
-
-        x: (Screen.width - win.width) / 2
-        y: (Screen.height - win.height) / 2
-
-        color: "#ffffc5"
-    }
-
     RowLayout {
         width: 600
         height: 50
