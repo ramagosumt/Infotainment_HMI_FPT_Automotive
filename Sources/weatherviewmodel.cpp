@@ -64,7 +64,7 @@ qint8 WeatherViewModel::getCurrentProvinceRaw() const {
     return weatherModel->getCurrentProvinceName();
 }
 
-qint8 WeatherViewModel::getCurrentTemperatureRaw() const {
+qint16 WeatherViewModel::getCurrentTemperatureRaw() const {
     return weatherModel->getCurrentTemperature();
 }
 
@@ -76,7 +76,7 @@ qint8 WeatherViewModel::getCurrentConditionRaw() const {
     return weatherModel->getCurrentCondition();
 }
 
-qint8 WeatherViewModel::getCurrentWindSpeedRaw() const {
+qint16 WeatherViewModel::getCurrentWindSpeedRaw() const {
     return weatherModel->getCurrentWindSpeed();
 }
 
@@ -88,7 +88,7 @@ qint8 WeatherViewModel::getDestinationProvinceRaw() const {
     return weatherModel->getDestinationProvinceName();
 }
 
-qint8 WeatherViewModel::getDestinationTemperatureRaw() const {
+qint16 WeatherViewModel::getDestinationTemperatureRaw() const {
     return weatherModel->getDestinationTemperature();
 }
 
@@ -100,7 +100,7 @@ qint8 WeatherViewModel::getDestinationConditionRaw() const {
     return weatherModel->getDestinationCondition();
 }
 
-qint8 WeatherViewModel::getDestinationWindSpeedRaw() const {
+qint16 WeatherViewModel::getDestinationWindSpeedRaw() const {
     return weatherModel->getDestinationWindSpeed();
 }
 
@@ -152,7 +152,7 @@ void WeatherViewModel::setCurrentProvinceName(const qint8 id) {
     emit onCurrentProvinceNameChanged();
 }
 
-void WeatherViewModel::setCurrentTemperature(const qint8 temperature) {
+void WeatherViewModel::setCurrentTemperature(const qint16 temperature) {
     if (temperature == weatherModel->getCurrentTemperature()) return;
     weatherModel->setCurrentTemperature(temperature);
     emit onCurrentTemperatureChanged();
@@ -182,7 +182,7 @@ void WeatherViewModel::setCurrentCondition(const qint8 condition) {
     emit onCurrentConditionIconChanged();
 }
 
-void WeatherViewModel::setCurrentWindSpeed(const qint8 windspeed) {
+void WeatherViewModel::setCurrentWindSpeed(const qint16 windspeed) {
     if (windspeed == weatherModel->getCurrentWindSpeed()) return;
     weatherModel->setCurrentWindSpeed(windspeed);
     emit onCurrentWindSpeedChanged();
@@ -211,7 +211,7 @@ void WeatherViewModel::setDestinationProvinceName(const qint8 id) {
     emit onDestinationProvinceNameChanged();
 }
 
-void WeatherViewModel::setDestinationTemperature(const qint8 temperature) {
+void WeatherViewModel::setDestinationTemperature(const qint16 temperature) {
     if (temperature == weatherModel->getDestinationTemperature()) return;
     weatherModel->setDestinationTemperature(temperature);
     emit onDestinationTemperatureChanged();
@@ -241,7 +241,7 @@ void WeatherViewModel::setDestinationCondition(const qint8 condition) {
     emit onDestinationConditionIconChanged();
 }
 
-void WeatherViewModel::setDestinationWindSpeed(const qint8 windspeed) {
+void WeatherViewModel::setDestinationWindSpeed(const qint16 windspeed) {
     if (windspeed == weatherModel->getDestinationWindSpeed()) return;
     weatherModel->setDestinationWindSpeed(windspeed);
     emit onDestinationWindSpeedChanged();

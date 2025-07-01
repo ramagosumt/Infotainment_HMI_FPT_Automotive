@@ -14,6 +14,8 @@ set(SOURCE_FILES
     Sources/mediamodel.cpp
     Sources/mediaviewmodel.cpp
     Sources/mediasampleapi.cpp
+    Sources/streamingmodel.cpp
+    Sources/streamingviewmodel.cpp
     Sources/errormanager.cpp
     Sources/main.cpp
 )
@@ -25,6 +27,8 @@ set(HEADER_FILES
     Headers/mediamodel.h
     Headers/mediaviewmodel.h
     Headers/mediasampleapi.h
+    Headers/streamingmodel.h
+    Headers/streamingviewmodel.h
     Headers/errormanager.h
 )
 
@@ -34,6 +38,7 @@ set(QML_FILES
     QML/ARHUDEditor.qml
     QML/WeatherView.qml
     QML/MediaView.qml
+    QML/StreamingView.qml
 )
 
 # === Asset Files ===

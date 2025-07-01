@@ -72,49 +72,52 @@ public:
 
     struct WeatherData {
         Province            province;
-        qint8               temperature;
+
+        qint16              temperature;
         TemperatureUnit     temperatureUnit;
+
         Condition           condition;
-        qint8               windSpeed;
+
+        qint16              windSpeed;
         WindSpeedUnit       windSpeedUnit;
     };
 
     explicit WeatherModel(QObject *parent = nullptr);
 
-    qint8 getCurrentProvinceName()          const;
-    qint8 getCurrentTemperature()           const;
-    qint8 getCurrentTemperatureUnit()       const;
-    qint8 getCurrentCondition()             const;
-    qint8 getCurrentWindSpeed()             const;
-    qint8 getCurrentWindSpeedUnit()         const;
+    qint8  getCurrentProvinceName()         const;
+    qint16 getCurrentTemperature()          const;
+    qint8  getCurrentTemperatureUnit()      const;
+    qint8  getCurrentCondition()            const;
+    qint16 getCurrentWindSpeed()            const;
+    qint8  getCurrentWindSpeedUnit()        const;
 
-    qint8 getDestinationProvinceName()      const;
-    qint8 getDestinationTemperature()       const;
-    qint8 getDestinationTemperatureUnit()   const;
-    qint8 getDestinationCondition()         const;
-    qint8 getDestinationWindSpeed()         const;
-    qint8 getDestinationWindSpeedUnit()     const;
+    qint8  getDestinationProvinceName()     const;
+    qint16 getDestinationTemperature()      const;
+    qint8  getDestinationTemperatureUnit()  const;
+    qint8  getDestinationCondition()        const;
+    qint16 getDestinationWindSpeed()        const;
+    qint8  getDestinationWindSpeedUnit()    const;
 
     void setCurrentProvinceName(const qint8 id);
-    void setCurrentTemperature(const qint8 temperature);
+    void setCurrentTemperature(const qint16 temperature);
     void setCurrentTemperatureUnit(const qint8 unit);
     void setCurrentCondition(const qint8 condition);
-    void setCurrentWindSpeed(const qint8 windspeed);
+    void setCurrentWindSpeed(const qint16 windspeed);
     void setCurrentWindSpeedUnit(const qint8 unit);
 
     void setDestinationProvinceName(const qint8 id);
-    void setDestinationTemperature(const qint8 temperature);
+    void setDestinationTemperature(const qint16 temperature);
     void setDestinationTemperatureUnit(const qint8 unit);
     void setDestinationCondition(const qint8 condition);
-    void setDestinationWindSpeed(const qint8 windspeed);
+    void setDestinationWindSpeed(const qint16 windspeed);
     void setDestinationWindSpeedUnit(const qint8 unit);
 
-    static qint8 convertCelsiusToFahrenheit(const qint8 celsius);
-    static qint8 convertFahrenheitToCelsius(const qint8 fahrenheit);
-    static qint8 convertCelsiusToKelvin(const qint8 celsius);
-    static qint8 convertKelvinToCelsius(const qint8 kelvin);
-    static qint8 convertMetersPerSecondToKilometersPerHour(const qint8 mps);
-    static qint8 convertMetersPerSecondToMilesPerHour(const qint8 mps);
+    static qint16 convertCelsiusToFahrenheit(const qint16 celsius);
+    static qint16 convertFahrenheitToCelsius(const qint16 fahrenheit);
+    static qint16 convertCelsiusToKelvin(const qint16 celsius);
+    static qint16 convertKelvinToCelsius(const qint16 kelvin);
+    static qint16 convertMetersPerSecondToKilometersPerHour(const qint16 mps);
+    static qint16 convertMetersPerSecondToMilesPerHour(const qint16 mps);
 
 private:
     WeatherData m_current;

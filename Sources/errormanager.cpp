@@ -1,7 +1,5 @@
 #include "ErrorManager.h"
 
-#include "ErrorManager.h"
-
 ErrorManager::ErrorManager(QObject *parent)
     : QObject(parent)
 {
@@ -14,10 +12,10 @@ ErrorManager::ErrorManager(QObject *parent)
 
     connect(m_stateMachine, &QScxmlStateMachine::runningChanged, this, [this]() {
         if (m_stateMachine->isRunning())
-            emit updated();
+            emit onUpdated();
     });
 
-    connect(m_stateMachine, &QScxmlStateMachine::reachedStableState, this, &ErrorManager::updated);
+    connect(m_stateMachine, &QScxmlStateMachine::reachedStableState, this, &ErrorManager::onUpdated);
 
     m_stateMachine->start();
 
@@ -33,7 +31,7 @@ ErrorManager::ErrorManager(QObject *parent)
             m_periodicCurrentTime = 0;
             ++m_reconnectingTime;
         }
-        emit updated();
+        emit onUpdated();
     });
 }
 

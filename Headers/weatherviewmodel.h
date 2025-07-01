@@ -47,34 +47,34 @@ public:
     Q_INVOKABLE QString getDestinationWindSpeedUnit()       const;
 
     Q_INVOKABLE qint8 getCurrentProvinceRaw()               const;
-    Q_INVOKABLE qint8 getCurrentTemperatureRaw()            const;
+    Q_INVOKABLE qint16 getCurrentTemperatureRaw()           const;
     Q_INVOKABLE qint8 getCurrentTemperatureUnitRaw()        const;
     Q_INVOKABLE qint8 getCurrentConditionRaw()              const;
-    Q_INVOKABLE qint8 getCurrentWindSpeedRaw()              const;
+    Q_INVOKABLE qint16 getCurrentWindSpeedRaw()             const;
     Q_INVOKABLE qint8 getCurrentWindSpeedUnitRaw()          const;
 
     Q_INVOKABLE qint8 getDestinationProvinceRaw()           const;
-    Q_INVOKABLE qint8 getDestinationTemperatureRaw()        const;
+    Q_INVOKABLE qint16 getDestinationTemperatureRaw()       const;
     Q_INVOKABLE qint8 getDestinationTemperatureUnitRaw()    const;
     Q_INVOKABLE qint8 getDestinationConditionRaw()          const;
-    Q_INVOKABLE qint8 getDestinationWindSpeedRaw()          const;
+    Q_INVOKABLE qint16 getDestinationWindSpeedRaw()         const;
     Q_INVOKABLE qint8 getDestinationWindSpeedUnitRaw()      const;
 
     Q_INVOKABLE QString getCurrentConditionIcon()           const;
     Q_INVOKABLE QString getDestinationConditionIcon()       const;
 
     Q_INVOKABLE void setCurrentProvinceName(const qint8 id);
-    Q_INVOKABLE void setCurrentTemperature(const qint8 temperature);
+    Q_INVOKABLE void setCurrentTemperature(const qint16 temperature);
     Q_INVOKABLE void setCurrentTemperatureUnit(const qint8 unit);
     Q_INVOKABLE void setCurrentCondition(const qint8 condition);
-    Q_INVOKABLE void setCurrentWindSpeed(const qint8 windspeed);
+    Q_INVOKABLE void setCurrentWindSpeed(const qint16 windspeed);
     Q_INVOKABLE void setCurrentWindSpeedUnit(const qint8 unit);
 
     Q_INVOKABLE void setDestinationProvinceName(const qint8 id);
-    Q_INVOKABLE void setDestinationTemperature(const qint8 temperature);
+    Q_INVOKABLE void setDestinationTemperature(const qint16 temperature);
     Q_INVOKABLE void setDestinationTemperatureUnit(const qint8 unit);
     Q_INVOKABLE void setDestinationCondition(const qint8 condition);
-    Q_INVOKABLE void setDestinationWindSpeed(const qint8 windspeed);
+    Q_INVOKABLE void setDestinationWindSpeed(const qint16 windspeed);
     Q_INVOKABLE void setDestinationWindSpeedUnit(const qint8 unit);
 
 private:
