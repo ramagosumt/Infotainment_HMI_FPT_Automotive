@@ -9,29 +9,32 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Scxml)
 
 # === Source Files ===
 set(SOURCE_FILES
-    weathermodel.cpp
-    weatherviewmodel.cpp
-    mediamodel.cpp
-    mediaviewmodel.cpp
-    errormanager.cpp
+    Sources/weathermodel.cpp
+    Sources/weatherviewmodel.cpp
+    Sources/mediamodel.cpp
+    Sources/mediaviewmodel.cpp
+    Sources/mediasampleapi.cpp
+    Sources/errormanager.cpp
 )
 
 # === Header Files ===
 set(HEADER_FILES
-    weathermodel.h
-    weatherviewmodel.h
-    mediamodel.h
-    mediaviewmodel.h
-    errormanager.h
+    Headers/weathermodel.h
+    Headers/weatherviewmodel.h
+    Headers/mediamodel.h
+    Headers/mediaviewmodel.h
+    Headers/mediasampleapi.h
+    Headers/errormanager.h
 )
 
 # === QML Files ===
 set(QML_FILES
-    Main.qml
-    ARHUDEditor.qml
-    WeatherView.qml
-    WeatherViewEditor.qml
-    MediaView.qml
+    QML/ARHUD.qml
+    QML/ARHUDEditor.qml
+    QML/WeatherView.qml
+    QML/WeatherViewEditor.qml
+    QML/MediaView.qml
+    QML/Main.qml
 )
 
 # === Asset Files ===
@@ -69,7 +72,7 @@ set(SCXML_FILE
 
 # === Executable ===
 qt_add_executable(appWeatherApp_MVVM
-    main.cpp
+    Sources/main.cpp
 )
 
 # === QML Module with Grouped Resources ===
@@ -81,12 +84,19 @@ qt_add_qml_module(appWeatherApp_MVVM
     RESOURCES ${SCXML_FILE} ${FONT_FILES} ${IMAGE_FILES}
 )
 
+# === Include Directories ===
+target_include_directories(appWeatherApp_MVVM
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/Headers
+        ${CMAKE_CURRENT_SOURCE_DIR}/Sources
+)
+
 # === Target Properties ===
 set_target_properties(appWeatherApp_MVVM PROPERTIES
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE_BUNDLE_VERSION           ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING     ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE                          TRUE
+    WIN32_EXECUTABLE                       TRUE
 )
 
 # === Linking ===
@@ -97,6 +107,7 @@ target_link_libraries(appWeatherApp_MVVM
 
 # === Install Rules ===
 include(GNUInstallDirs)
+
 install(TARGETS appWeatherApp_MVVM
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
