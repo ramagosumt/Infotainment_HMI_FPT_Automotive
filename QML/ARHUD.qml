@@ -36,50 +36,57 @@ ApplicationWindow {
         color: "#ffffc5"
     }
 
-    RowLayout {
-        width: 600
-        height: 50
+    Item {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        width: parent.width
+        height: 150
 
-        x: 50
-        y: 250
+        Item {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 20
+            width: parent.width
+            height: 150
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "transparent"
+            Rectangle {
+                width: 150
+                height: 50
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: parent.height - 50
+                color: "transparent"
 
-            MediaView {
-                id: mediaViewWindow
-                objectName: "mediaViewWindow"
+                WeatherView {
+                    anchors.fill: parent
+                    objectName: "weatherViewWindow"
+                }
             }
-        }
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "transparent"
-        }
+            Rectangle {
+                width: 240
+                height: 135
+                x: parent.width / 2 - 150 / 2 - 60 - width
+                y: parent.height - 122
+                color: "transparent"
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "transparent"
-        }
+                StreamingView {
+                    anchors.fill: parent
+                    objectName: "streamingViewWindow"
+                }
+            }
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "transparent"
-        }
+            Rectangle {
+                width: 150
+                height: 50
+                x: parent.width / 2 + 150 / 2 + 60
+                y: parent.height - 50
+                color: "transparent"
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            color: "transparent"
-
-            WeatherView {
-                id: weatherViewWindow
-                objectName: "weatherViewWindow"
+                MediaView {
+                    anchors.fill: parent
+                    objectName: "mediaViewWindow"
+                }
             }
         }
     }

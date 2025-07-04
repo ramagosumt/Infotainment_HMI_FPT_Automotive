@@ -1,41 +1,69 @@
-
 # WeatherApp_MVVM — Automotive HMI, AR HUD & Custom Qt Editor Prototype
 
-This project is a personal practice prototype simulating an **automotive HMI system** with **AR HUD features** on a windshield, combined with a custom-built **ImGUI-like editor** entirely made with Qt. The project structure and workflow are designed to mirror real-world development processes from my time collaborating with **FPT Automotive**.
+This project is a personal prototype simulating an **automotive HMI system** with **AR HUD features** designed for windshield projection, combined with a fully custom **ImGUI-inspired editor** built entirely with Qt. The project structure and workflow are modeled after real-world processes from my collaboration with **FPT Automotive**.
 
 ---
 
 ## ✨ Project Purpose
 
-- Practice technical workflows for **automotive HUD, AR interfaces**, and **in-vehicle HMI design**.
-- Gain experience producing customer-facing technical documentation:
-  - **SRS** (Software Requirements Specification)
-  - **SAD** (Software Architecture Document)
-- Prototype interactive automotive UIs using:
-  - Weather and media information displays
-  - AR-inspired HUD visualizations
-  - A custom Qt-based editor, inspired by **ImGUI**, for real-time HUD adjustments
+- Practice development workflows for **automotive HUDs**, **AR interfaces**, and **in-vehicle HMI design**  
+- Prototype interactive automotive UI elements including weather, media, and video streaming  
+- Gain experience producing professional technical documentation:  
+  - **SRS** (Software Requirements Specification)  
+  - **SAD** (Software Architecture Document)  
+- Simulate customer-facing development pipelines used in the automotive industry  
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **Qt 6 & Qt Quick (QML)** for modern, cross-platform UI
-- **C++** for ViewModel, state management, and logic
-- **SCXML & State Machines** for system state handling
-- **Qt Resource System (qrc)** for embedding images, fonts, and assets
-- **MVVM Pattern** for clean separation of logic and UI
-- **Custom ImGUI-style Editor** built from scratch using pure Qt and QML
+- **Qt 6 & Qt Quick (QML)** — Modern, cross-platform UI  
+- **C++** — ViewModel, system logic, and state management  
+- **SCXML & Qt State Machines** — Reliable state control for system logic  
+- **Qt Resource System (qrc)** — Embedded assets and fonts  
+- **MVVM Pattern** — Clean separation of logic, data, and UI  
+- **Custom ImGUI-style Editor** — Built entirely with Qt and QML for real-time HUD adjustments  
+- **FFmpeg Integration** — Video decoding for AR HUD streaming simulation  
 
 ---
 
-## 📦 Features
+## 📦 Key Features
 
-- Weather panel showing province, temperature, condition, windspeed
-- Media player interface with source, song, and artist details
-- Self-contained HUD editor window for real-time UI adjustments, inspired by ImGUI
-- AR-inspired HUD visual elements designed for potential future windshield projections
-- Fully self-contained binary with all assets embedded via Qt's resource system
+### 🔧 Core System Features
+
+- Self-contained, real-time HUD **editor** for UI adjustments during runtime  
+- AR-inspired HUD visuals designed for potential windshield projection  
+- Fully packaged binary with all assets embedded via Qt's resource system  
+
+---
+
+### ☁️ Weather System
+
+- Displays current **province**, **temperature**, **weather condition**, and **windspeed**  
+- Supports both **current** and **destination** locations  
+- Dynamic state handling with **SCXML-powered system**  
+- Clean MVVM structure with fully exposed C++ logic to QML  
+- Fully interactive via editor with real-time weather adjustments  
+
+---
+
+### 🎵 Media System
+
+- Simulated **media player** panel showing:  
+  - **Source name** (e.g., USB, Bluetooth)  
+  - **Song title**  
+  - **Artist details**  
+- Editor support for live modification of media information during development  
+
+---
+
+### 📹 Streaming & AR HUD Simulation
+
+- Integrated **FFmpeg-based video decoding pipeline**  
+- Simulates real-time video streaming for AR HUD visualization  
+- MVVM structure separating logic, state, and UI  
+- Foundation for testing AR windshield projections or camera feeds  
+- Streaming logic entirely implemented in C++ and exposed to QML  
 
 ---
 
@@ -49,21 +77,20 @@ This project is a personal practice prototype simulating an **automotive HMI sys
 ├── CMakeLists.txt # Build configuration
 └── README.md
 ```
+---
+
+## 🚧 Project Notes
+
+This is a **technical learning prototype**. Focus is on system structure, UI logic, and workflow simulation — **not** polished visuals or complete automotive feature sets.  
 
 ---
 
-## 🚧 Notes
+## 🙏 Acknowledgements
 
-This is a technical learning project. Focus is on system structure, UI logic, and workflow simulation — not polished visuals or full automotive feature completeness.
-
----
-
-## 📖 Acknowledgements
-
-Developed independently as part of my effort to better understand automotive software development, AR HUD technology, and customer collaboration processes, inspired by my work with **FPT Automotive**.
+Developed independently as part of my initiative to deepen expertise in automotive software, AR HUD technologies, and customer-aligned development, inspired by my work at **FPT Automotive**.  
 
 ---
 
-## 😎 Bonus: Why ImGUI-style Editor?
+## 😎 Why a Custom ImGUI-style Editor?
 
-I wanted full control over HUD configuration without relying on external libraries. The editor window is built entirely with Qt Quick and mimics the lightweight, immediate-style behavior of **ImGUI**, allowing real-time tweaks of system visuals during development.
+To retain full control over HUD configuration without third-party dependencies. The editor is built entirely with **Qt Quick**, mimicking the lightweight, immediate-style behavior of **ImGUI**, enabling real-time HUD tweaks during development.  

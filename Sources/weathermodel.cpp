@@ -10,10 +10,10 @@ WeatherModel::WeatherModel(QObject *parent)
     m_current.windSpeed = 5;
     m_current.windSpeedUnit = METERSPERSECOND;
 
-    m_destination.province = NGHEAN;
+    m_destination.province = THANHHOA;
     m_destination.temperature = 25;
     m_destination.temperatureUnit = DEGREE;
-    m_destination.condition = PARTLYCLOUDY;
+    m_destination.condition = RAINY;
     m_destination.windSpeed = 1;
     m_destination.windSpeedUnit = METERSPERSECOND;
 }

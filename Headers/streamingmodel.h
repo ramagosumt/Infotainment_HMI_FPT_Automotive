@@ -2,6 +2,9 @@
 #define STREAMINGMODEL_H
 
 #include <QObject>
+#include <QImage>
+
+#include "ffmpegdecoder.h"
 
 class StreamingModel : public QObject
 {
@@ -9,42 +12,66 @@ class StreamingModel : public QObject
 
 public:
     struct StreamingData {
-        QString             inputPath;      // Source file, device, etc.
-        QString             outputPath;     // Encoded output target (likely stream URL)
+        QString             inputPath;
+        QString             outputPath;
 
         qint16              videoWidth;
         qint16              videoHeight;
+        float               videoRatio;
+        bool                isRatioConst;
 
-        float               videoRatio;     // Aspect ratio (e.g., 1.0 for 1:1, 2.0 for 16:8)
-        bool                isRatioConst;   // Maintain constant aspect ratio if true
+        qint16              frameRate;
+        bool                isStreaming;
 
-        qint16              frameRate;      // Target FPS (within your 40-60 range ideally)
-
-        bool                isStreaming;    // True when streaming is active
+        qint16              sourceWidth;
+        qint16              sourceHeight;
+        float               sourceRatio;
+        float               sourceFPS;
     };
 
     explicit StreamingModel(QObject *parent = nullptr);
-
+    
     QString getInputPath()                  const;
     QString getOutputPath()                 const;
+
     qint16  getVideoWidth()                 const;
     qint16  getVideoHeight()                const;
     float   getVideoRatio()                 const;
     bool    isRatioConst()                  const;
+
+    qint16  getSourceWidth()                const;
+    qint16  getSourceHeight()               const;
+    float   getSourceRatio()                const;
+    float   getSourceFPS()                  const;
+
     qint16  getFrameRate()                  const;
     bool    isStreaming()                   const;
 
     void setInputPath(const QString& path);
     void setOutputPath(const QString& path);
+
     void setVideoWidth(const qint16 width);
     void setVideoHeight(const qint16 height);
     void setVideoRatio(const float ratio);
     void setRatioConst(const bool ratioConst);
+
+    void setSourceWidth(const qint16 width);
+    void setSourceHeight(const qint16 height);
+    void setSourceRatio(const float ratio);
+    void setSourceFPS(const float fps);
+
     void setFrameRate(const qint16 frameRate);
     void setStreaming(const bool streaming);
+    
+    void startDecoding();
+    void stopDecoding();
 
 private:
     StreamingData m_video;
+    FFmpegDecoder m_decoder;
+
+signals:
+    void onFrameReady(const QImage &frame);
 };
 
 #endif // STREAMINGMODEL_H
