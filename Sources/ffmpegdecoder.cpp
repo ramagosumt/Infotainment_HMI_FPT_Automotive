@@ -16,9 +16,12 @@ void FFmpegDecoder::setInputPath(const QString &path)
     m_inputPath = path;
 }
 
-void FFmpegDecoder::startDecoding()
+void FFmpegDecoder::startDecoding(int width, int height)
 {
     if (m_workerThread && m_workerThread->isRunning()) return;
+
+    m_outputWidth = 3 * width;
+    m_outputHeight = 3 * height;
 
     m_stopRequested = false;
 
@@ -124,7 +127,7 @@ void FFmpegDecoder::decodingLoop()
                         sws_scale(swsCtx, frame->data, frame->linesize, 0, codecCtx->height, rgbData, rgbLinesize);
                         QImage img(rgbData[0], codecCtx->width, codecCtx->height, rgbLinesize[0], QImage::Format_RGB888);
 
-                        int cropWidth = 720, cropHeight = 405, detectedX = 860, detectedY = 390;
+                        int cropWidth = m_outputWidth, cropHeight = m_outputHeight, detectedX = 860, detectedY = 390;
                         int cropX = qBound(0, detectedX - cropWidth / 2, img.width() - cropWidth);
                         int cropY = qBound(0, detectedY - cropHeight / 2, img.height() - cropHeight);
 
@@ -161,4 +164,9 @@ void FFmpegDecoder::decodingLoop()
     avformat_close_input(&formatCtx);
 
     emit onDecodingFinished();
+}
+
+void FFmpegDecoder::setOutputSize(int width, int height) {
+    m_outputWidth = 3 * width;
+    m_outputHeight = 3 * height;
 }

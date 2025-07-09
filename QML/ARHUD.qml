@@ -64,10 +64,13 @@ ApplicationWindow {
             }
 
             Rectangle {
+                property real knownBottomY: parent.height - 122 + 135
+                property real viewHeight: width / (streamingViewModel ? streamingViewModel.videoRatio : (16/9))
+
                 width: 240
-                height: 135
+                height: viewHeight
                 x: parent.width / 2 - 150 / 2 - 60 - width
-                y: parent.height - 122
+                y: knownBottomY - height
                 color: "transparent"
 
                 StreamingView {

@@ -161,11 +161,11 @@ void StreamingModel::setStreaming(const bool streaming)
     m_video.isStreaming = streaming;
 }
 
-void StreamingModel::startDecoding()
+void StreamingModel::startDecoding(qint16 width, qint16 height)
 {
     if (m_video.inputPath.isEmpty()) return;
 
-    m_decoder.startDecoding();
+    m_decoder.startDecoding(static_cast<int>(width), static_cast<int>(height));
     m_video.isStreaming = true;
 }
 
@@ -173,4 +173,8 @@ void StreamingModel::stopDecoding()
 {
     m_decoder.stopDecoding();
     m_video.isStreaming = false;
+}
+
+void StreamingModel::updateFFmpeg() {
+    m_decoder.setOutputSize(m_video.videoWidth, m_video.videoHeight);
 }

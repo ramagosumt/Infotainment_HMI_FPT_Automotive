@@ -111,6 +111,9 @@ void StreamingViewModel::setVideoRatio(float ratio)
     if (ratio == streamingModel->getVideoRatio()) return;
     streamingModel->setVideoRatio(ratio);
     emit onVideoRatioChanged();
+
+    updateRatio();
+    streamingModel->updateFFmpeg();
 }
 
 void StreamingViewModel::setRatioConst(bool ratioConst)
@@ -158,9 +161,9 @@ void StreamingViewModel::setSourceFPS(qint16 fps) {
     emit onSourceFPSChanged();
 }
 
-void StreamingViewModel::startDecoding()
+void StreamingViewModel::startDecoding(qint16 width, qint16 height)
 {
-    streamingModel->startDecoding();
+    streamingModel->startDecoding(width, height);
     emit onIsStreamingChanged();
 }
 
@@ -189,4 +192,14 @@ void StreamingViewModel::setupConnections()
         emit onSourceRatioChanged();
         emit onSourceFPSChanged();
     });
+}
+
+void StreamingViewModel::updateRatio() {
+    const int baseWidth = 240;
+
+    qint16 videoWidth = baseWidth;
+    qint16 videoHeight = static_cast<qint16>(baseWidth / getVideoRatio());
+
+    setVideoWidth(videoWidth);
+    setVideoHeight(videoHeight);
 }

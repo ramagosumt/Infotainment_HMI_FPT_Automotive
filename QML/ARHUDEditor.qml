@@ -587,7 +587,30 @@ ApplicationWindow {
                                 Label { text: "Video Properties:"; font.bold: true }
                                 Label { text: `Width: ${streamingViewModel ? streamingViewModel.videoWidth : 0}` }
                                 Label { text: `Height: ${streamingViewModel ? streamingViewModel.videoHeight : 0}` }
-                                Label { text: `Ratio: ${streamingViewModel ? outRow.approximateRatio(streamingViewModel.videoRatio) : 0}` }
+
+                                RowLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 4
+
+                                    Label {
+                                        text: "Select Ratio:"
+                                    }
+
+                                    ComboBox {
+                                        id: ratioComboBox
+                                        model: ["16:9", "4:3", "1:1", "21:9", "16:10", "3:2"]
+
+                                        onCurrentIndexChanged: {
+                                            var ratioString = model[currentIndex];
+
+                                            var ratio = outRow.getRatioFromString(ratioString);
+                                            if (streamingViewModel && ratio > 0 && ratio !== streamingViewModel.videoRatio) {
+                                                streamingViewModel.videoRatio = ratio;
+                                            }
+                                        }
+                                    }
+                                }
+
                                 Label { text: `FPS: ${streamingViewModel ? streamingViewModel.frameRate : 0}` }
                             }
 
@@ -600,6 +623,18 @@ ApplicationWindow {
                                 Label { text: `FPS: ${streamingViewModel ? streamingViewModel.sourceFPS : 0}` }
                             }
 
+                            function getRatioFromString(ratioStr) {
+                                switch(ratioStr) {
+                                case "16:9": return 16/9;
+                                case "4:3": return 4/3;
+                                case "1:1": return 1;
+                                case "21:9": return 21/9;
+                                case "16:10": return 16/10;
+                                case "3:2": return 3/2
+                                default: return -1;
+                                }
+                            }
+
                             function approximateRatio(ratio) {
                                 if (ratio <= 0) return "Unknown";
 
@@ -607,6 +642,7 @@ ApplicationWindow {
                                     { r: 16/9, label: "16:9" },
                                     { r: 4/3, label: "4:3" },
                                     { r: 21/9, label: "21:9" },
+                                    { r: 16/10, label: "16:10" },
                                     { r: 3/2, label: "3:2" },
                                     { r: 1, label: "1:1" }
                                 ];

@@ -15,7 +15,7 @@ class StreamingViewModel : public QObject
     Q_PROPERTY(QString outputPath                   READ getOutputPath                  NOTIFY onOutputPathChanged)
     Q_PROPERTY(qint16  videoWidth                   READ getVideoWidth                  NOTIFY onVideoWidthChanged)
     Q_PROPERTY(qint16  videoHeight                  READ getVideoHeight                 NOTIFY onVideoHeightChanged)
-    Q_PROPERTY(float   videoRatio                   READ getVideoRatio                  NOTIFY onVideoRatioChanged)
+    Q_PROPERTY(float videoRatio                     READ getVideoRatio                  WRITE  setVideoRatio                        NOTIFY onVideoRatioChanged)
     Q_PROPERTY(bool    isRatioConst                 READ isRatioConst                   NOTIFY onRatioConstChanged)
     Q_PROPERTY(qint16  frameRate                    READ getFrameRate                   NOTIFY onFrameRateChanged)
     Q_PROPERTY(bool    isStreaming                  READ isStreaming                    NOTIFY onIsStreamingChanged)
@@ -57,7 +57,7 @@ public:
     Q_INVOKABLE void setSourceFPS(const qint16 fps);
 
     Q_INVOKABLE void setInputPath(const QString &path);
-    Q_INVOKABLE void startDecoding();
+    Q_INVOKABLE void startDecoding(qint16 width, qint16 height);
     Q_INVOKABLE void stopDecoding();
 
 private:
@@ -67,6 +67,8 @@ private:
     bool m_ownsModel = false;
 
     void setupConnections();
+    void updateRatio();
+    void updateFFmpeg();
 
 signals:
     void onCurrentFrameUpdated();

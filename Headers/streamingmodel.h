@@ -63,8 +63,10 @@ public:
     void setFrameRate(const qint16 frameRate);
     void setStreaming(const bool streaming);
     
-    void startDecoding();
+    void startDecoding(qint16 width, qint16 height);
     void stopDecoding();
+
+    void updateFFmpeg();
 
 private:
     StreamingData m_video;

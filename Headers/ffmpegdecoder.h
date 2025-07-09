@@ -22,10 +22,15 @@ public:
     ~FFmpegDecoder();
 
     void setInputPath(const QString &path);
-    void startDecoding();
+    void startDecoding(int width, int height);
     void stopDecoding();
 
+    void setOutputSize(int width, int height);
+
 private:
+    int m_outputWidth;
+    int m_outputHeight;
+
     QString m_inputPath;
     QThread* m_workerThread;
 

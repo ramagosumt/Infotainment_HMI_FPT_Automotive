@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     QString assetPath = QCoreApplication::applicationDirPath() + "/WeatherApp_MVVM/assets/videos/map.mp4";
     streamingViewModel.setInputPath(assetPath);                                             // Set video input path for streaming
 
-    streamingViewModel.startDecoding();                                                     // Start video decoding
+    streamingViewModel.startDecoding(240, 135);                                             // Start video decoding
 
     // Load Main QML
     const QUrl mainUrl(QStringLiteral("qrc:/WeatherApp_MVVM/QML/ARHUD.qml"));               // Main QML file URL
