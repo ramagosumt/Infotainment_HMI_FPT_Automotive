@@ -70,13 +70,59 @@ This project is a personal prototype simulating an **automotive HMI system** wit
 ## 📁 Folder Structure (Simplified)
 
 ```
-├── Headers/       # C++ header files
-├── Sources/       # C++ source files
-│   ├── QML/       # QML files for UI and editor
-├── Resources/     # Embedded images, fonts, and assets
-├── CMakeLists.txt # Build configuration
+├── Headers/           # C++ header files
+├── Sources/           # C++ source files
+│   ├── QML/           # QML files for UI and editor
+├── Plugins/           # Third-party libraries (e.g., FFmpeg)
+├── Resources/         # Embedded images, fonts, and assets
+├── CMakeLists.txt     # Build configuration
 └── README.md
 ```
+
+---
+
+## 🔌 FFmpeg Setup (Required for Streaming)
+
+This project uses FFmpeg for video decoding. Due to size and licensing, FFmpeg binaries are not committed directly. Please follow the steps below to enable streaming support:
+
+### 📥 Step 1: Download the FFmpeg Plugin Folder
+
+Download from this Google Drive folder:  
+➡️ [Download `Plugins/ffmpeg/`](https://drive.google.com/drive/folders/1A8O1zK8L6aH4mVjb2OzUNdu9SA5hp5Dg?usp=drive_link)
+
+It contains all required `.dll` and `.dll.a` files:
+- `avcodec-61.dll`, `avformat-61.dll`, `avutil-59.dll`, etc.
+- `libavcodec.dll.a`, `libavformat.dll.a`, etc.
+
+---
+
+### 📁 Step 2: Move It Into Your Project
+
+After downloading, place the folder like this:
+
+```
+<cloned_repo>/
+├── Plugins/
+│   └── ffmpeg/
+│       ├── bin/
+│       │   ├── avcodec-61.dll
+│       │   └── ...
+│       └── lib/
+│           ├── libavcodec.dll.a
+│           └── ...
+```
+
+---
+
+### ⚡ Optional: PowerShell Automation (Windows)
+
+If you want to automate the move:
+
+```powershell
+# Run this in the root of your project after downloading FFmpeg
+Move-Item -Path "C:\Path\To\Downloaded\ffmpeg" -Destination ".\Plugins\ffmpeg"
+```
+
 ---
 
 ## 🚧 Project Notes
@@ -85,12 +131,12 @@ This is a **technical learning prototype**. Focus is on system structure, UI log
 
 ---
 
-## 🙏 Acknowledgements
-
-Developed independently as part of my initiative to deepen expertise in automotive software, AR HUD technologies, and customer-aligned development, inspired by my work at **FPT Automotive**.  
-
----
-
 ## 😎 Why a Custom ImGUI-style Editor?
 
 To retain full control over HUD configuration without third-party dependencies. The editor is built entirely with **Qt Quick**, mimicking the lightweight, immediate-style behavior of **ImGUI**, enabling real-time HUD tweaks during development.  
+
+---
+
+## 🙏 Acknowledgements
+
+Developed independently as part of my initiative to deepen expertise in automotive software, AR HUD technologies, and customer-aligned development, inspired by my work at **FPT Automotive**.
