@@ -1,4 +1,4 @@
-#include "weatherviewmodel.h"
+#include "Weather/weatherviewmodel.h"
 
 WeatherViewModel::WeatherViewModel(QObject *parent)
     : QObject{parent}, weatherModel(new WeatherModel(this)), m_ownsModel(true)

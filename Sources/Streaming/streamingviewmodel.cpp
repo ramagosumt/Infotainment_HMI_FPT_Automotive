@@ -1,4 +1,4 @@
-#include "streamingviewmodel.h"
+#include "Streaming/streamingviewmodel.h"
 
 StreamingViewModel::StreamingViewModel(QObject *parent)
     : QObject(parent), streamingModel(new StreamingModel(this)), m_ownsModel(true)

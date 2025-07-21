@@ -1,4 +1,4 @@
-#include "osmparser.h"
+#include "3D/osmparser.h"
 
 #include <QFile>
 #include <QXmlStreamReader>

@@ -4,11 +4,11 @@
 #include <QQmlComponent>              // Used to manually create QML components
 #include <QScxmlStateMachine>         // Provides SCXML-based state machine support
 
-#include "weatherviewmodel.h"         // Weather ViewModel header
-#include "mediaviewmodel.h"           // Media ViewModel header
-#include "streamingviewmodel.h"       // Streaming ViewModel header
-#include "streamingprovider.h"        // Provides image frames for video streaming
-#include "errormanager.h"             // Error management logic
+#include "Weather/weatherviewmodel.h"         // Weather ViewModel header
+#include "Media/mediaviewmodel.h"           // Media ViewModel header
+#include "Streaming/streamingviewmodel.h"       // Streaming ViewModel header
+#include "Streaming/streamingprovider.h"        // Provides image frames for video streaming
+#include "Error/errormanager.h"             // Error management logic
 
 int main(int argc, char *argv[])
 {

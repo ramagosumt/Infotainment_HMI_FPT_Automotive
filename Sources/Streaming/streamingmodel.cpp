@@ -1,4 +1,4 @@
-#include "streamingmodel.h"
+#include "Streaming/streamingmodel.h"
 
 StreamingModel::StreamingModel(QObject *parent)
     : QObject(parent)

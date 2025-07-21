@@ -1,5 +1,5 @@
-#include "mediamodel.h"
-#include "mediasampleapi.h"
+#include "Media/mediamodel.h"
+#include "Media/mediasampleapi.h"
 
 MediaModel::MediaModel(QObject *parent)
     : QObject(parent)
