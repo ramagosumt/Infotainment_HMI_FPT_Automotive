@@ -1,4 +1,4 @@
-#include "ErrorManager.h"
+#include "Error/ErrorManager.h"
 
 ErrorManager::ErrorManager(QObject *parent)
     : QObject(parent)

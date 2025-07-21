@@ -5,35 +5,47 @@ project(WeatherApp_MVVM VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Scxml)
+find_package(Qt6 REQUIRED COMPONENTS Quick Scxml Positioning)
 
 # === Source Files ===
 set(SOURCE_FILES
-    Sources/weathermodel.cpp
-    Sources/weatherviewmodel.cpp
-    Sources/mediamodel.cpp
-    Sources/mediaviewmodel.cpp
-    Sources/mediasampleapi.cpp
-    Sources/streamingmodel.cpp
-    Sources/streamingviewmodel.cpp
-    Sources/ffmpegdecoder.cpp
-    Sources/streamingprovider.cpp
-    Sources/errormanager.cpp
+    Sources/3D/osmparser.cpp
+
+    Sources/Error/errormanager.cpp
+
+    Sources/Media/mediamodel.cpp
+    Sources/Media/mediaviewmodel.cpp
+    Sources/Media/mediasampleapi.cpp
+
+
+    Sources/Streaming/ffmpegdecoder.cpp
+    Sources/Streaming/streamingmodel.cpp
+    Sources/Streaming/streamingviewmodel.cpp
+    Sources/Streaming/streamingprovider.cpp
+
+    Sources/Weather/weathermodel.cpp
+    Sources/Weather/weatherviewmodel.cpp
+
     Sources/main.cpp
 )
 
 # === Header Files ===
 set(HEADER_FILES
-    Headers/weathermodel.h
-    Headers/weatherviewmodel.h
-    Headers/mediamodel.h
-    Headers/mediaviewmodel.h
-    Headers/mediasampleapi.h
-    Headers/streamingmodel.h
-    Headers/streamingviewmodel.h
-    Headers/ffmpegdecoder.h
-    Headers/streamingprovider.h
-    Headers/errormanager.h
+    Headers/3D/osmparser.h
+
+    Headers/Error/errormanager.h
+
+    Headers/Media/mediamodel.h
+    Headers/Media/mediaviewmodel.h
+    Headers/Media/mediasampleapi.h
+
+    Headers/Streaming/ffmpegdecoder.h
+    Headers/Streaming/streamingmodel.h
+    Headers/Streaming/streamingviewmodel.h
+    Headers/Streaming/streamingprovider.h
+
+    Headers/Weather/weathermodel.h
+    Headers/Weather/weatherviewmodel.h
 )
 
 # === QML Files ===
@@ -117,6 +129,7 @@ target_include_directories(appWeatherApp_MVVM
 target_link_libraries(appWeatherApp_MVVM
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Scxml
+    PRIVATE Qt6::Positioning
     PRIVATE "${FFMPEG_LIB_DIR}/libavcodec.dll.a"
     PRIVATE "${FFMPEG_LIB_DIR}/libavformat.dll.a"
     PRIVATE "${FFMPEG_LIB_DIR}/libavutil.dll.a"

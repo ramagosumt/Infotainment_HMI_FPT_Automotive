@@ -1,4 +1,4 @@
-#include "weathermodel.h"
+#include "Weather/weathermodel.h"
 
 WeatherModel::WeatherModel(QObject *parent)
     : QObject{parent}

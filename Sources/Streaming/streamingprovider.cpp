@@ -1,4 +1,4 @@
-#include "streamingprovider.h"
+#include "Streaming/streamingprovider.h"
 
 StreamingProvider::StreamingProvider()
     : QQuickImageProvider(QQuickImageProvider::Image)

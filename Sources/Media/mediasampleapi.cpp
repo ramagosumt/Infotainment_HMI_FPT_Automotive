@@ -1,4 +1,4 @@
-#include "mediasampleapi.h"
+#include "Media/mediasampleapi.h"
 
 QList<MediaModel::MediaData> MediaSampleAPI::getSampleSongs()
 {
