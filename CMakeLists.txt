@@ -5,7 +5,7 @@ project(WeatherApp_MVVM VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Scxml)
+find_package(Qt6 REQUIRED COMPONENTS Quick Scxml Positioning)
 
 # === Source Files ===
 set(SOURCE_FILES
@@ -19,6 +19,7 @@ set(SOURCE_FILES
     Sources/ffmpegdecoder.cpp
     Sources/streamingprovider.cpp
     Sources/errormanager.cpp
+    Sources/osmparser.cpp
     Sources/main.cpp
 )
 
@@ -34,6 +35,7 @@ set(HEADER_FILES
     Headers/ffmpegdecoder.h
     Headers/streamingprovider.h
     Headers/errormanager.h
+    Headers/osmparser.h
 )
 
 # === QML Files ===
@@ -117,6 +119,7 @@ target_include_directories(appWeatherApp_MVVM
 target_link_libraries(appWeatherApp_MVVM
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Scxml
+    PRIVATE Qt6::Positioning
     PRIVATE "${FFMPEG_LIB_DIR}/libavcodec.dll.a"
     PRIVATE "${FFMPEG_LIB_DIR}/libavformat.dll.a"
     PRIVATE "${FFMPEG_LIB_DIR}/libavutil.dll.a"
