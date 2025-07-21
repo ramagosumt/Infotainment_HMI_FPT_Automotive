@@ -1,3 +1,4 @@
+
 # WeatherApp_MVVM — Automotive HMI, AR HUD & Custom Qt Editor Prototype
 
 This project is a personal prototype simulating an **automotive HMI system** with **AR HUD features** designed for windshield projection, combined with a fully custom **ImGUI-inspired editor** built entirely with Qt. The project structure and workflow are modeled after real-world processes from my collaboration with **FPT Automotive**.
@@ -33,6 +34,9 @@ This project is a personal prototype simulating an **automotive HMI system** wit
 
 - Self-contained, real-time HUD **editor** for UI adjustments during runtime  
 - AR-inspired HUD visuals designed for potential windshield projection  
+- Modular **MVVM architecture** with distinct C++/QML separation:  
+  - `Headers/` and `Sources/` structured into `Media/`, `Weather/`, `Streaming/`, `Error/`, and `3D/`  
+- State-driven control using **Qt SCXML**, including a dedicated `ErrorManager` state machine  
 - Fully packaged binary with all assets embedded via Qt's resource system  
 
 ---
@@ -122,6 +126,24 @@ If you want to automate the move:
 # Run this in the root of your project after downloading FFmpeg
 Move-Item -Path "C:\Path\To\Downloaded\ffmpeg" -Destination ".\Plugins\ffmpeg"
 ```
+
+---
+
+## 🖼️ Screenshots
+
+Located in `Demo/Images/`. These capture different HUD and editor states:
+
+| Overview | EditorNoDisplay |
+|----------|-----------------|
+| ![Overview](Demo/Images/Overview.png) | ![EditorNoDisplay](Demo/Images/EditorNoDisplay.png) |
+
+| HUDNoDisplay | HUDNoError |
+|--------------|------------|
+| ![HUDNoDisplay](Demo/Images/HUDNoDisplay.png) | ![HUDNoError](Demo/Images/HUDNoError.png) |
+
+| HUDLongMusic | EditorNoError |
+|--------------|----------------|
+| ![HUDLongMusic](Demo/Images/HUDLongMusic.png) | ![EditorNoError](Demo/Images/EditorNoError.png) |
 
 ---
 
