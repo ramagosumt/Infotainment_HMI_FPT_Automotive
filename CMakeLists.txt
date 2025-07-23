@@ -1,13 +1,20 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(WeatherApp_MVVM VERSION 0.1 LANGUAGES CXX)
+project(ARHUDProject VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Scxml Positioning)
 
-# === Source Files ===
+# === FFmpeg Integration ===
+set(FFMPEG_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Plugins/ffmpeg")
+set(FFMPEG_INCLUDE_DIR "${FFMPEG_ROOT_DIR}/include")
+set(FFMPEG_LIB_DIR "${FFMPEG_ROOT_DIR}/lib")
+
+message(STATUS "FFMPEG_LIB_DIR=${FFMPEG_LIB_DIR}")
+
+# === Source/Header Files ===
 set(SOURCE_FILES
     Sources/3D/osmparser.cpp
 
@@ -17,7 +24,6 @@ set(SOURCE_FILES
     Sources/Media/mediaviewmodel.cpp
     Sources/Media/mediasampleapi.cpp
 
-
     Sources/Streaming/ffmpegdecoder.cpp
     Sources/Streaming/streamingmodel.cpp
     Sources/Streaming/streamingviewmodel.cpp
@@ -25,11 +31,8 @@ set(SOURCE_FILES
 
     Sources/Weather/weathermodel.cpp
     Sources/Weather/weatherviewmodel.cpp
-
-    Sources/main.cpp
 )
 
-# === Header Files ===
 set(HEADER_FILES
     Headers/3D/osmparser.h
 
@@ -48,7 +51,7 @@ set(HEADER_FILES
     Headers/Weather/weatherviewmodel.h
 )
 
-# === QML Files ===
+# === QML/Resource Files ===
 set(QML_FILES
     QML/ARHUD.qml
     QML/ARHUDEditor.qml
@@ -57,7 +60,6 @@ set(QML_FILES
     QML/StreamingView.qml
 )
 
-# === Asset Files ===
 set(FONT_FILES
     assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf
     assets/fonts/Encode_Sans/static/EncodeSans-ExtraLight.ttf
@@ -89,58 +91,59 @@ set(VIDEO_FILES
     assets/videos/map.mp4
 )
 
-# === SCXML File ===
 set(SCXML_FILE
     ErrorManager.scxml
 )
 
-# === Executable ===
-qt_add_executable(appWeatherApp_MVVM
+# === Header Files ===
+source_group("Header Files" FILES ${HEADER_FILES})
+
+# === Source Files ===
+source_group("Source Files" FILES ${SOURCE_FILES} ${QML_FILES})
+
+# === Resources ===
+source_group("Resources" FILES ${FONT_FILES} ${IMAGE_FILES} ${VIDEO_FILES})
+
+# === State Charts ===
+source_group("State charts" FILES ${SCXML_FILE})
+
+# === Core ARHUD Library ===
+add_library(arhudcore STATIC
+    ${SOURCE_FILES}
+    ${HEADER_FILES}
+)
+
+target_include_directories(arhudcore PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/Headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sources
+    ${FFMPEG_INCLUDE_DIR}
+)
+
+target_link_libraries(arhudcore PUBLIC
+    Qt6::Quick Qt6::Scxml Qt6::Positioning
+    "${FFMPEG_LIB_DIR}/libavcodec.dll.a"
+    "${FFMPEG_LIB_DIR}/libavformat.dll.a"
+    "${FFMPEG_LIB_DIR}/libavutil.dll.a"
+    "${FFMPEG_LIB_DIR}/libswresample.dll.a"
+    "${FFMPEG_LIB_DIR}/libswscale.dll.a"
+)
+
+qt_policy(SET QTP0004 NEW)
+
+qt_add_executable(appARHUDProject
     Sources/main.cpp
 )
 
-# === QML Module with Grouped Resources ===
-qt_add_qml_module(appWeatherApp_MVVM
-    URI WeatherApp_MVVM
+qt_add_qml_module(appARHUDProject
+    URI ARHUDProject
     VERSION 1.0
     QML_FILES ${QML_FILES}
-    SOURCES ${SOURCE_FILES} ${HEADER_FILES}
     RESOURCES ${SCXML_FILE} ${FONT_FILES} ${IMAGE_FILES} ${VIDEO_FILES}
 )
 
-# === Include Directories ===
-target_include_directories(appWeatherApp_MVVM
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Headers
-        ${CMAKE_CURRENT_SOURCE_DIR}/Sources
-)
+target_link_libraries(appARHUDProject PRIVATE arhudcore)
 
-# === FFmpeg Integration ===
-set(FFMPEG_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Plugins/ffmpeg")
-set(FFMPEG_INCLUDE_DIR "${FFMPEG_ROOT_DIR}/include")
-set(FFMPEG_LIB_DIR "${FFMPEG_ROOT_DIR}/lib")
-
-# Include FFmpeg headers
-target_include_directories(appWeatherApp_MVVM
-    PRIVATE ${FFMPEG_INCLUDE_DIR}
-)
-
-# Link FFmpeg libraries with absolute paths
-target_link_libraries(appWeatherApp_MVVM
-    PRIVATE Qt6::Quick
-    PRIVATE Qt6::Scxml
-    PRIVATE Qt6::Positioning
-    PRIVATE "${FFMPEG_LIB_DIR}/libavcodec.dll.a"
-    PRIVATE "${FFMPEG_LIB_DIR}/libavformat.dll.a"
-    PRIVATE "${FFMPEG_LIB_DIR}/libavutil.dll.a"
-    PRIVATE "${FFMPEG_LIB_DIR}/libswresample.dll.a"
-    PRIVATE "${FFMPEG_LIB_DIR}/libswscale.dll.a"
-)
-
-message(STATUS "FFMPEG_LIB_DIR=${FFMPEG_LIB_DIR}")
-
-# === Target Properties ===
-set_target_properties(appWeatherApp_MVVM PROPERTIES
+set_target_properties(appARHUDProject PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION           ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING     ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE                          TRUE
@@ -148,21 +151,24 @@ set_target_properties(appWeatherApp_MVVM PROPERTIES
 )
 
 # === Copy FFmpeg DLLs After Build ===
-add_custom_command(TARGET appWeatherApp_MVVM POST_BUILD
+add_custom_command(TARGET appARHUDProject POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${FFMPEG_ROOT_DIR}/bin/avcodec-61.dll"
         "${FFMPEG_ROOT_DIR}/bin/avformat-61.dll"
         "${FFMPEG_ROOT_DIR}/bin/avutil-59.dll"
         "${FFMPEG_ROOT_DIR}/bin/swresample-5.dll"
         "${FFMPEG_ROOT_DIR}/bin/swscale-8.dll"
-        $<TARGET_FILE_DIR:appWeatherApp_MVVM>
+        $<TARGET_FILE_DIR:appARHUDProject>
 )
 
 # === Install Rules ===
 include(GNUInstallDirs)
 
-install(TARGETS appWeatherApp_MVVM
+install(TARGETS appARHUDProject
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# === External Tests ===
+add_subdirectory(ARHUDTests)

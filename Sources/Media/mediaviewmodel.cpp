@@ -194,17 +194,17 @@ QString MediaViewModel::convertDurationToString(const qint32 duration) const {
 QString MediaViewModel::getSourceIconPath(qint8 source) const {
     switch (source) {
     case MediaModel::AMAZON:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/AmazonMusic100.png";
+        return "qrc:/ARHUDProject/assets/images/media/AmazonMusic100.png";
     case MediaModel::APPLE:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/AppleMusic100.png";
+        return "qrc:/ARHUDProject/assets/images/media/AppleMusic100.png";
     case MediaModel::RADIO:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/Radio100.png";
+        return "qrc:/ARHUDProject/assets/images/media/Radio100.png";
     case MediaModel::SOUNDCLOUD:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/SoundCloud100.png";
+        return "qrc:/ARHUDProject/assets/images/media/SoundCloud100.png";
     case MediaModel::SPOTIFY:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/Spotify100.png";
+        return "qrc:/ARHUDProject/assets/images/media/Spotify100.png";
     case MediaModel::USB:
-        return "qrc:/WeatherApp_MVVM/assets/images/media/USB100.png";
+        return "qrc:/ARHUDProject/assets/images/media/USB100.png";
     case MediaModel::UNSPECIFIED:
     default:
         return "";

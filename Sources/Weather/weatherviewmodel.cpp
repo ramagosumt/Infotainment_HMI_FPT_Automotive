@@ -111,17 +111,17 @@ qint8 WeatherViewModel::getDestinationWindSpeedUnitRaw() const {
 QString WeatherViewModel::getCurrentConditionIcon() const {
     switch (weatherModel->getCurrentCondition()) {
     case WeatherModel::CLOUDY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Cloudy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Cloudy100.png";
     case WeatherModel::FOGGY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Foggy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Foggy100.png";
     case WeatherModel::PARTLYCLOUDY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/PartlyCloudy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/PartlyCloudy100.png";
     case WeatherModel::RAINY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Rainy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Rainy100.png";
     case WeatherModel::STORMY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Stormy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Stormy100.png";
     case WeatherModel::SUNNY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Sunny100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Sunny100.png";
     default:
         return "Unknown";
     }
@@ -130,17 +130,17 @@ QString WeatherViewModel::getCurrentConditionIcon() const {
 QString WeatherViewModel::getDestinationConditionIcon() const {
     switch (weatherModel->getDestinationCondition()) {
     case WeatherModel::CLOUDY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Cloudy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Cloudy100.png";
     case WeatherModel::FOGGY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Foggy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Foggy100.png";
     case WeatherModel::PARTLYCLOUDY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/PartlyCloudy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/PartlyCloudy100.png";
     case WeatherModel::RAINY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Rainy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Rainy100.png";
     case WeatherModel::STORMY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Stormy100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Stormy100.png";
     case WeatherModel::SUNNY:
-        return "qrc:/WeatherApp_MVVM/assets/images/weather/Sunny100.png";
+        return "qrc:/ARHUDProject/assets/images/weather/Sunny100.png";
     default:
         return "Unknown";
     }
