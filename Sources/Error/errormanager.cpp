@@ -1,14 +1,14 @@
 #include "Error/ErrorManager.h"
 
 ErrorManager::ErrorManager(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), m_stateTimer(this)
 {
     m_stateMachine = QScxmlStateMachine::fromFile(":/WeatherApp_MVVM/ErrorManager.scxml");
+    if (m_stateMachine)
+        m_stateMachine->setParent(this); // ✅ set parent explicitly
 
-    if (!m_stateMachine) return;
-
-    const QList<QScxmlError> errors = m_stateMachine->parseErrors();
-    if (!errors.isEmpty()) return;
+    if (!m_stateMachine || !m_stateMachine->parseErrors().isEmpty())
+        return;
 
     connect(m_stateMachine, &QScxmlStateMachine::runningChanged, this, [this]() {
         if (m_stateMachine->isRunning())

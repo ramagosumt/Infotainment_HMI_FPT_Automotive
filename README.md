@@ -1,137 +1,110 @@
+# WeatherApp_MVVM — Automotive HMI, AR HUD & Qt Editor Prototype
 
-# WeatherApp_MVVM — Automotive HMI, AR HUD & Custom Qt Editor Prototype
-
-This project is a personal prototype simulating an **automotive HMI system** with **AR HUD features** designed for windshield projection, combined with a fully custom **ImGUI-inspired editor** built entirely with Qt. The project structure and workflow are modeled after real-world processes from my collaboration with **FPT Automotive**.
-
----
-
-## ✨ Project Purpose
-
-- Practice development workflows for **automotive HUDs**, **AR interfaces**, and **in-vehicle HMI design**  
-- Prototype interactive automotive UI elements including weather, media, and video streaming  
-- Gain experience producing professional technical documentation:  
-  - **SRS** (Software Requirements Specification)  
-  - **SAD** (Software Architecture Document)  
-- Simulate customer-facing development pipelines used in the automotive industry  
+This project simulates an **automotive HMI system** with **AR HUD features**, designed for windshield projection. It includes a fully custom **ImGUI-inspired editor** and is structured around real-world workflows from my collaboration with **FPT Automotive**.
 
 ---
 
-## 🛠️ Technologies Used
+## ✨ Purpose
 
-- **Qt 6 & Qt Quick (QML)** — Modern, cross-platform UI  
-- **C++** — ViewModel, system logic, and state management  
-- **SCXML & Qt State Machines** — Reliable state control for system logic  
-- **Qt Resource System (qrc)** — Embedded assets and fonts  
-- **MVVM Pattern** — Clean separation of logic, data, and UI  
-- **Custom ImGUI-style Editor** — Built entirely with Qt and QML for real-time HUD adjustments  
-- **FFmpeg Integration** — Video decoding for AR HUD streaming simulation  
+- Practice with **automotive HUDs**, **AR interfaces**, and **HMI design**
+- Prototype interactive systems: weather, media, and video streaming
+- Write professional documents (SRS, SAD)
+- Simulate customer-facing automotive development pipelines
 
 ---
 
-## 📦 Key Features
+## 🛠️ Tech Stack
 
-### 🔧 Core System Features
-
-- Self-contained, real-time HUD **editor** for UI adjustments during runtime  
-- AR-inspired HUD visuals designed for potential windshield projection  
-- Modular **MVVM architecture** with distinct C++/QML separation:  
-  - `Headers/` and `Sources/` structured into `Media/`, `Weather/`, `Streaming/`, `Error/`, and `3D/`  
-- State-driven control using **Qt SCXML**, including a dedicated `ErrorManager` state machine  
-- Fully packaged binary with all assets embedded via Qt's resource system  
-
----
-
-### ☁️ Weather System
-
-- Displays current **province**, **temperature**, **weather condition**, and **windspeed**  
-- Supports both **current** and **destination** locations  
-- Dynamic state handling with **SCXML-powered system**  
-- Clean MVVM structure with fully exposed C++ logic to QML  
-- Fully interactive via editor with real-time weather adjustments  
+- **Qt 6 / QML** — Modern, cross-platform UI
+- **C++** — System logic and MVVM ViewModel
+- **Qt SCXML** — Reliable state control
+- **Qt Resource System (qrc)** — Embedded fonts and assets
+- **MVVM Pattern** — Separation of UI, logic, and data
+- **FFmpeg** — Video decoding and HUD streaming
+- **Custom Editor** — Real-time HUD adjustment, ImGUI-style, made with Qt Quick
 
 ---
 
-### 🎵 Media System
+## 🔧 Core Features
 
-- Simulated **media player** panel showing:  
-  - **Source name** (e.g., USB, Bluetooth)  
-  - **Song title**  
-  - **Artist details**  
-- Editor support for live modification of media information during development  
+### 🌐 System Highlights
+- AR-style HUD visuals for windshield simulation
+- Real-time **HUD editor** for runtime layout/configuration
+- Modular MVVM layout: `Media/`, `Weather/`, `Streaming/`, `Error/`, `3D/`
+- State-driven logic with `ErrorManager` via SCXML
+- Fully embedded build (assets via qrc)
+
+### ☁️ Weather Panel
+- Live display of **province**, **temperature**, **condition**, and **windspeed**
+- Dual support: current & destination locations
+- MVVM-based, SCXML-controlled dynamic state transitions
+
+### 🎵 Media Panel
+- Displays source, song title, and artist
+- Editor integration for live data editing
+
+### 📹 Streaming Panel
+- **FFmpeg-based** decoding and display
+- Simulates real-time AR HUD video stream
+- C++-only decoding backend exposed to QML
 
 ---
 
-### 📹 Streaming & AR HUD Simulation
-
-- Integrated **FFmpeg-based video decoding pipeline**  
-- Simulates real-time video streaming for AR HUD visualization  
-- MVVM structure separating logic, state, and UI  
-- Foundation for testing AR windshield projections or camera feeds  
-- Streaming logic entirely implemented in C++ and exposed to QML  
-
----
-
-## 📁 Folder Structure (Simplified)
+## 📁 Folder Overview
 
 ```
-├── Headers/           # C++ header files
+├── Headers/           # C++ headers
 ├── Sources/           # C++ source files
-│   ├── QML/           # QML files for UI and editor
-├── Plugins/           # Third-party libraries (e.g., FFmpeg)
-├── Resources/         # Embedded images, fonts, and assets
-├── CMakeLists.txt     # Build configuration
-└── README.md
+│   ├── QML/           # QML UI & editor
+├── Plugins/           # Third-party libraries (FFmpeg, GoogleTest)
+│   ├── ffmpeg/
+│   └── googletest/
+├── Resources/         # Images, fonts, and assets
+├── Demo/Images/       # Project screenshots
+├── UnitTests/         # GTest-based unit tests
+└── CMakeLists.txt     # Build config
 ```
 
 ---
 
-## 🔌 FFmpeg Setup (Required for Streaming)
+## 📦 FFmpeg Setup
 
-This project uses FFmpeg for video decoding. Due to size and licensing, FFmpeg binaries are not committed directly. Please follow the steps below to enable streaming support:
+Streaming requires FFmpeg binaries (excluded from repo):
 
-### 📥 Step 1: Download the FFmpeg Plugin Folder
+1. **Download Plugins**
+   ➡️ [Google Drive: `Plugins/ffmpeg/`](https://drive.google.com/drive/folders/1A8O1zK8L6aH4mVjb2OzUNdu9SA5hp5Dg?usp=drive_link)
 
-Download from this Google Drive folder:  
-➡️ [Download `Plugins/ffmpeg/`](https://drive.google.com/drive/folders/1A8O1zK8L6aH4mVjb2OzUNdu9SA5hp5Dg?usp=drive_link)
+2. **Place in Folder**
+   ```
+   <project>/
+   └── Plugins/
+       └── ffmpeg/
+           ├── bin/
+           │   ├── avcodec-61.dll
+           │   └── ...
+           └── lib/
+               ├── libavcodec.dll.a
+               └── ...
+   ```
 
-It contains all required `.dll` and `.dll.a` files:
-- `avcodec-61.dll`, `avformat-61.dll`, `avutil-59.dll`, etc.
-- `libavcodec.dll.a`, `libavformat.dll.a`, etc.
-
----
-
-### 📁 Step 2: Move It Into Your Project
-
-After downloading, place the folder like this:
-
-```
-<cloned_repo>/
-├── Plugins/
-│   └── ffmpeg/
-│       ├── bin/
-│       │   ├── avcodec-61.dll
-│       │   └── ...
-│       └── lib/
-│           ├── libavcodec.dll.a
-│           └── ...
-```
+3. *(Optional)* PowerShell automation:
+   ```powershell
+   Move-Item -Path "C:\Path\To\ffmpeg" -Destination ".\Plugins\ffmpeg"
+   ```
 
 ---
 
-### ⚡ Optional: PowerShell Automation (Windows)
+## 🧪 Unit Test Coverage
 
-If you want to automate the move:
+This project includes **200+ unit tests** across weather, media, streaming, and error logic, implemented using **GoogleTest** (`Plugins/googletest`).
 
-```powershell
-# Run this in the root of your project after downloading FFmpeg
-Move-Item -Path "C:\Path\To\Downloaded\ffmpeg" -Destination ".\Plugins\ffmpeg"
-```
+| UnitTest Summary |
+|------------------|
+| ![UnitTest](Demo/Images/UnitTest.png) |
 
 ---
 
 ## 🖼️ Screenshots
-
-Located in `Demo/Images/`. These capture different HUD and editor states:
 
 | Overview | EditorNoDisplay |
 |----------|-----------------|
@@ -147,18 +120,18 @@ Located in `Demo/Images/`. These capture different HUD and editor states:
 
 ---
 
-## 🚧 Project Notes
+## 🚧 Note
 
-This is a **technical learning prototype**. Focus is on system structure, UI logic, and workflow simulation — **not** polished visuals or complete automotive feature sets.  
-
----
-
-## 😎 Why a Custom ImGUI-style Editor?
-
-To retain full control over HUD configuration without third-party dependencies. The editor is built entirely with **Qt Quick**, mimicking the lightweight, immediate-style behavior of **ImGUI**, enabling real-time HUD tweaks during development.  
+This is a **technical prototype** focused on architecture and workflow simulation — not visual polish or feature completeness.
 
 ---
 
-## 🙏 Acknowledgements
+## 😎 Why Custom Editor?
 
-Developed independently as part of my initiative to deepen expertise in automotive software, AR HUD technologies, and customer-aligned development, inspired by my work at **FPT Automotive**.
+To maintain full control over the HUD with zero third-party UI dependencies. The editor is inspired by **ImGUI**, but fully implemented in **Qt Quick** to support real-time interaction and styling.
+
+---
+
+## 🙏 Acknowledgments
+
+Created to expand my skills in automotive HMI, AR HUDs, and Qt-based architecture, inspired by my internship with **FPT Automotive**.

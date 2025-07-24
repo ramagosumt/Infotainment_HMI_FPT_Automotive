@@ -18,7 +18,7 @@ ApplicationWindow {
 
     FontLoader {
         id: encodeSansThin
-        source: "qrc:/WeatherApp_MVVM/assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf"
+        source: "qrc:/ARHUDProject/assets/fonts/Encode_Sans/static/EncodeSans-Thin.ttf"
     }
 
     ApplicationWindow {

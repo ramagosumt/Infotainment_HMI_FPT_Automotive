@@ -4,11 +4,11 @@
 #include <QQmlComponent>              // Used to manually create QML components
 #include <QScxmlStateMachine>         // Provides SCXML-based state machine support
 
-#include "Weather/weatherviewmodel.h"         // Weather ViewModel header
-#include "Media/mediaviewmodel.h"           // Media ViewModel header
+#include "Weather/weatherviewmodel.h"           // Weather ViewModel header
+#include "Media/mediaviewmodel.h"               // Media ViewModel header
 #include "Streaming/streamingviewmodel.h"       // Streaming ViewModel header
 #include "Streaming/streamingprovider.h"        // Provides image frames for video streaming
-#include "Error/errormanager.h"             // Error management logic
+#include "Error/errormanager.h"                 // Error management logic
 
 int main(int argc, char *argv[])
 {
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("errorManager",       &errorManager);              // Expose ErrorManager to QML
 
     // Editor
-    QQmlComponent editorComponent(&engine, QUrl("qrc:/WeatherApp_MVVM/QML/ARHUDEditor.qml"));   // Load Editor QML component
+    QQmlComponent editorComponent(&engine, QUrl("qrc:/ARHUDProject/QML/ARHUDEditor.qml"));      // Load Editor QML component
     QObject* editorWindow = editorComponent.create();                                           // Create Editor window object
 
     engine.rootContext()->setContextProperty("editorWindow",        editorWindow);              // Expose Editor window to QML
@@ -49,13 +49,13 @@ int main(int argc, char *argv[])
         streamingProvider->setFrame(streamingViewModel.getCurrentFrame());                      // Update image provider with latest frame
     });
 
-    QString assetPath = QCoreApplication::applicationDirPath() + "/WeatherApp_MVVM/assets/videos/map.mp4";
+    QString assetPath = QCoreApplication::applicationDirPath() + "/ARHUDProject/assets/videos/map.mp4";
     streamingViewModel.setInputPath(assetPath);                                             // Set video input path for streaming
 
     streamingViewModel.startDecoding(240, 135);                                             // Start video decoding
 
     // Load Main QML
-    const QUrl mainUrl(QStringLiteral("qrc:/WeatherApp_MVVM/QML/ARHUD.qml"));               // Main QML file URL
+    const QUrl mainUrl(QStringLiteral("qrc:/ARHUDProject/QML/ARHUD.qml"));                  // Main QML file URL
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,
