@@ -22,24 +22,24 @@ enable_testing()
 
 # === Source/Header Files ===
 set(SOURCE_FILES
-    Sources/UT/3D/OsmParser_UT.cpp
+    Tests/UT/3D/OsmParser_UT.cpp
 
-    Sources/UT/Error/ErrorManager_UT.cpp
+    Tests/UT/Error/ErrorManager_UT.cpp
 
-    Sources/UT/Media/MediaModel_UT.cpp
-    Sources/UT/Media/MediaViewModel_UT.cpp
+    Tests/UT/Media/MediaModel_UT.cpp
+    Tests/UT/Media/MediaViewModel_UT.cpp
 
-    Sources/UT/Streaming/FFmpegDecoder_UT.cpp
-    Sources/UT/Streaming/StreamingModel_UT.cpp
-    Sources/UT/Streaming/StreamingViewModel_UT.cpp
-    Sources/UT/Streaming/StreamingProvider_UT.cpp
+    Tests/UT/Streaming/FFmpegDecoder_UT.cpp
+    Tests/UT/Streaming/StreamingModel_UT.cpp
+    Tests/UT/Streaming/StreamingViewModel_UT.cpp
+    Tests/UT/Streaming/StreamingProvider_UT.cpp
 
-    Sources/UT/Weather/WeatherModel_UT.cpp
-    Sources/UT/Weather/WeatherViewModel_UT.cpp
+    Tests/UT/Weather/WeatherModel_UT.cpp
+    Tests/UT/Weather/WeatherViewModel_UT.cpp
 )
 
 qt_add_executable(appARHUDTests
-    Sources/main.cpp
+    Tests/main.cpp
     ${SOURCE_FILES}
 )
 

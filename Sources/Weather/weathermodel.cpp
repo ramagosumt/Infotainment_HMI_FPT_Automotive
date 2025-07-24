@@ -135,7 +135,8 @@ void WeatherModel::setDestinationWindSpeedUnit(const qint8 unit) {
 }
 
 qint16 WeatherModel::convertCelsiusToFahrenheit(const qint16 celsius) {
-    return static_cast<qint16>((celsius * 9.0f / 5.0f) + 32.0f + 0.5f);
+    if (celsius >= 0) return static_cast<qint16>((celsius * 9.0f / 5.0f) + 32.0f + 0.5f);
+        else return static_cast<qint16>((celsius * 9.0f / 5.0f) + 32.0f);
 }
 
 qint16 WeatherModel::convertFahrenheitToCelsius(const qint16 fahrenheit) {
