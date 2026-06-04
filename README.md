@@ -2,6 +2,8 @@
 
 This project simulates an **automotive HMI system** with **AR HUD features**, designed for windshield projection. It includes a fully custom **ImGUI-inspired editor** and is structured around real-world workflows from my collaboration with **FPT Automotive**.
 
+* **Video:** [Automotive AR-HUD Demo](https://youtu.be/SjDzGrQi5eA)
+
 ---
 
 ## ✨ Purpose
