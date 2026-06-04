@@ -1,4 +1,4 @@
-# WeatherApp_MVVM — Automotive HMI, AR HUD & Qt Editor Prototype
+# WeatherApp_MVVM -  Automotive HMI, AR HUD & Qt Editor Prototype
 
 This project simulates an **automotive HMI system** with **AR HUD features**, designed for windshield projection. It includes a fully custom **ImGUI-inspired editor** and is structured around real-world workflows from my collaboration with **FPT Automotive**.
 
@@ -15,13 +15,13 @@ This project simulates an **automotive HMI system** with **AR HUD features**, de
 
 ## 🛠️ Tech Stack
 
-- **Qt 6 / QML** — Modern, cross-platform UI
-- **C++** — System logic and MVVM ViewModel
-- **Qt SCXML** — Reliable state control
-- **Qt Resource System (qrc)** — Embedded fonts and assets
-- **MVVM Pattern** — Separation of UI, logic, and data
-- **FFmpeg** — Video decoding and HUD streaming
-- **Custom Editor** — Real-time HUD adjustment, ImGUI-style, made with Qt Quick
+- **Qt 6 / QML** -  Modern, cross-platform UI
+- **C++** -  System logic and MVVM ViewModel
+- **Qt SCXML** -  Reliable state control
+- **Qt Resource System (qrc)** -  Embedded fonts and assets
+- **MVVM Pattern** -  Separation of UI, logic, and data
+- **FFmpeg** -  Video decoding and HUD streaming
+- **Custom Editor** -  Real-time HUD adjustment, ImGUI-style, made with Qt Quick
 
 ---
 
@@ -122,7 +122,7 @@ This project includes **200+ unit tests** across weather, media, streaming, and 
 
 ## 🚧 Note
 
-This is a **technical prototype** focused on architecture and workflow simulation — not visual polish or feature completeness.
+This is a **technical prototype** focused on architecture and workflow simulation -  not visual polish or feature completeness.
 
 ---
 
